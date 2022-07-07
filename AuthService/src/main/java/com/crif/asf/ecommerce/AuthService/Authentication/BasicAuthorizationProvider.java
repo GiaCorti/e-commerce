@@ -29,19 +29,18 @@ public class BasicAuthorizationProvider implements AuthenticationProvider {
         String username = authentication.getPrincipal().toString(); // (1)
         String password = authentication.getCredentials().toString();
         String psw = accountService.getPass(username);
-        logger.info("Email: {}  pass: {}",username,password);
-        if(psw.equals(password)){
+        logger.info("Email: {}  pass: {}", username, password);
+        if (psw.equals(password)) {
 
-            return  new UsernamePasswordAuthenticationToken(username,password, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
-        }
-        else throw new AuthenticationException();
+            return new UsernamePasswordAuthenticationToken(username, password, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
+        } else throw new AuthenticationException();
 
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
 
-        if ( authentication.isAssignableFrom( BasicAuth.class ) ) {
+        if (authentication.isAssignableFrom(BasicAuth.class)) {
             return true;
         }
         return false;

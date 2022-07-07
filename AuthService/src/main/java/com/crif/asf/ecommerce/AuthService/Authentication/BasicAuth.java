@@ -5,7 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class BasicAuth extends UsernamePasswordAuthenticationToken {
 
     public BasicAuth(String username, String password) {
-        super( username, password );
+        super(username, password);
 
     }
 }

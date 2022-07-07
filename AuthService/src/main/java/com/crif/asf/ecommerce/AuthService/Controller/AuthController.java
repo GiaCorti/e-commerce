@@ -7,13 +7,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 @RequestMapping("/auth/")
 public class AuthController {
     @Autowired
     private AuthService authService;
+
     @GetMapping("login")
-    public String add(){
+    public String add() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getPrincipal().toString();
         return this.authService.getToken(username);
