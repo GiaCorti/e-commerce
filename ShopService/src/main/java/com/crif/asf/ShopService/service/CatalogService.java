@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.crif.asf.ShopService.exception.ProductAlreadyExistsException;
 import com.crif.asf.ShopService.exception.ProductNotFoundException;
+import com.crif.asf.ShopService.model.Filter;
 import com.crif.asf.ShopService.model.Product;
 import com.crif.asf.ShopService.repository.CatalogRepository;
 import com.crif.asf.ShopService.repository.CommentRepository;
@@ -52,6 +53,19 @@ public class CatalogService {
 
     public boolean existsById(Integer id) {
 	return catalogRepository.existsById(id);
+    }
+
+    public List<Product> findAllFiltered(Filter f, Integer page, Integer numElements) {
+	if (f.getOrder().equals("desc"))
+	    return catalogRepository.findByPriceBetweenOrderByPriceDesc(
+		    f.getMinPrice(), f.getMaxPrice(),
+		    PageRequest.of(page, numElements)).getContent();
+
+	else
+	    return catalogRepository.findByPriceBetweenOrderByPriceAsc(
+		    f.getMinPrice(), f.getMaxPrice(),
+		    PageRequest.of(page, numElements)).getContent();
+
     }
 
 }

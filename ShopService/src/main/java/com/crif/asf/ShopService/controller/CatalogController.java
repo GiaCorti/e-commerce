@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crif.asf.ShopService.model.Comment;
+import com.crif.asf.ShopService.model.Filter;
 import com.crif.asf.ShopService.model.Product;
 import com.crif.asf.ShopService.service.CatalogService;
 import com.crif.asf.ShopService.service.CommentService;
@@ -65,6 +66,14 @@ public class CatalogController {
     @PostMapping("{id_product}/comments")
     public void insertNewComment(@RequestBody Comment c) {
 	commentService.insertNewComment(c);
+    }
+
+    @PostMapping("/search")
+    public List<Product> getFilteredProducts(
+	    @RequestBody Filter f,
+	    @RequestParam(name = "page", required = true) Integer page,
+	    @RequestParam(name = "numElements", required = true) Integer numElements) {
+	return catalogService.findAllFiltered(f, page, numElements);
     }
 
 }

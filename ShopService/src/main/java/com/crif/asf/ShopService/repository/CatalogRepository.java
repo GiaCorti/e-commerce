@@ -12,4 +12,9 @@ public interface CatalogRepository extends JpaRepository<Product, Integer> {
     Page<Product> findAll(Pageable pageable);
 
     boolean existsByName(String name);
+
+    Page<Product> findByPriceBetweenOrderByPriceDesc(Double minPrice, Double maxPrice, Pageable pageable);
+
+    Page<Product> findByPriceBetweenOrderByPriceAsc(Double minPrice, Double maxPrice, Pageable pageable);
+
 }
