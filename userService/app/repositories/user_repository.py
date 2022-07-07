@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 from fastapi.encoders import jsonable_encoder
 
 from database import user_collection
-from models.user_model import UserModel
+from models.user_model import UserModel, UserListDto, Getpass, User_1, _helper
 
 
 class UserRepository:
@@ -16,7 +16,7 @@ class UserRepository:
         :param user_data: user
         :return: None -> new_user
         """
-        user_data=jsonable_encoder(user_data)
+        user_data = jsonable_encoder(user_data)
         new_user = user_collection.insert_one(user_data)
         return new_user
 
@@ -28,7 +28,7 @@ class UserRepository:
         """
         users = []
         for user in user_collection.find():
-            users.append(UserModel(**user))
+            users.append(UserListDto(**user))
         return users
 
     async def retrieve_user(self, id: str) -> Optional[UserModel]:
@@ -41,44 +41,60 @@ class UserRepository:
         if user:
             return UserModel(**user)
 
-    async def retrieve_user_by_fiscal_code(self, fiscal_code: str) -> UserModel:
+    async def retrieve_user_by_email(self, email: str) -> UserModel:
         """
-        Retrieve a user with a matching Fiscal Code
-        :param fiscal_code: the user fiscal code
+        Retrieve a user with a matching email
+        :param email: the user email
         :return: UserModel | None -> user model
         """
-        user = user_collection.find_one({"fiscal_code": fiscal_code})
+        user = user_collection.find_one({"email": email})
         if user:
             return UserModel(**user)
 
+    async def return_user_password (self, email: str) -> Getpass:
+        """
+        Retrieve a user with a matching password
+        :param password: the user password
+        :return: Getpass | None -> Getpass
+        """
+        user = user_collection.find_one( {"email": email} )
+        if user:
+            return Getpass  ( **user )
 
+    async def retrieve_id(self, email: str) -> dict:
+        user = user_collection.find_one( {"email": email} )
+        if user:
+            return _helper( user )
 
-    async def update_user(self, fiscal_code: str, data: dict):
+    async def update_user(self, email: str, data: dict):
+
         """
         Update a user with a matching ID
-        :param fiscal_code: the user fiscal code
+        :param data:
+        :param email: the user email
         :return: None
         """
+
         # Return false if an empty request body is sent.
         if len(data) < 1:
             return False
-        user = user_collection.find_one({"fiscal_code": fiscal_code})
+        user = user_collection.find_one({"email": email})
         if user:
             updated_user = user_collection.update_one(
-                {"fiscal_code": fiscal_code}, {"$set": data}
+                {"email": email}, {"$set": data}
             )
             if updated_user:
                 return True
             return False
 
     # Delete a user from the database
-    async def delete_user(self, fiscal_code: str):
+    async def delete_user(self, email: str):
         """
         Delete a user from the database
-        :param fiscal_code: the user fiscal code
+        :param email: the user mail
         :return:| None
         """
-        user = user_collection.find_one({"fiscal_code": fiscal_code})
+        user = user_collection.find_one({"email": email})
         if user:
-            user_collection.delete_one({"fiscal_code": fiscal_code})
+            user_collection.delete_one({"email": email})
             return True

@@ -1,4 +1,5 @@
 from urllib.request import Request
+
 import uvicorn
 from fastapi import FastAPI
 from uvicorn.middleware.debug import PlainTextResponse
@@ -8,7 +9,7 @@ from controllers.user_controller import router as user_router
 from responses.base_response import NotFoundException, ConflictException, BadRequestException
 
 
-async def main():
+def main():
     app = FastAPI()
     origins = ["*"]
 
@@ -19,7 +20,6 @@ async def main():
         allow_methods=["*"],
         allow_headers=["*"],
     )
-
 
     @app.exception_handler(NotFoundException)
     async def unicorn_notfound_exception_handler(request: Request, exc: NotFoundException):
@@ -33,8 +33,8 @@ async def main():
     async def unicorn_exception_handler(request: Request, exc: NotFoundException):
         return PlainTextResponse(str(exc.description), status_code=exc.code)
 
-    app.include_router(user_router, tags=["User"], prefix="/user")
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    app.include_router(user_router, tags=["Account"], prefix="/account")
+    uvicorn.run(app, host="127.0.0.1", port=14002)
 
 
 if __name__ == "__main__":
