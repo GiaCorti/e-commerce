@@ -21,7 +21,7 @@ import com.crif.asf.ShopService.service.CatalogService;
 import com.crif.asf.ShopService.service.CommentService;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 @CrossOrigin
 public class CatalogController {
 

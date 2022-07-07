@@ -11,16 +11,12 @@ import com.crif.asf.ShopService.exception.ProductNotFoundException;
 import com.crif.asf.ShopService.model.Filter;
 import com.crif.asf.ShopService.model.Product;
 import com.crif.asf.ShopService.repository.CatalogRepository;
-import com.crif.asf.ShopService.repository.CommentRepository;
 
 @Service
 public class CatalogService {
 
     @Autowired
     private CatalogRepository catalogRepository;
-
-    @Autowired
-    private CommentRepository commentRepository;
 
     public List<Product> findAll(Integer page, Integer numElements) {
 	return catalogRepository.findAll(PageRequest.of(page, numElements)).getContent();
@@ -65,7 +61,6 @@ public class CatalogService {
 	    return catalogRepository.findByPriceBetweenOrderByPriceAsc(
 		    f.getMinPrice(), f.getMaxPrice(),
 		    PageRequest.of(page, numElements)).getContent();
-
     }
 
 }
