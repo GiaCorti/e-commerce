@@ -21,7 +21,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        ConnectionString connectionString = new ConnectionString("mongodb://localhost:15000/AuthDB");
+        ConnectionString connectionString = new ConnectionString("mongodb://host.docker.internal:15000/AuthDB");
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .build();

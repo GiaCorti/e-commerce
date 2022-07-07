@@ -1,20 +1,27 @@
 package com.crif.asf.ecommerce.AuthService.Service;
 
-import org.springframework.http.ResponseEntity;
+import com.crif.asf.ecommerce.AuthService.Authentication.BasicAuthorizationProvider;
+import com.crif.asf.ecommerce.AuthService.Exception.BadCredentialsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AccountService {
 
+    Logger logger = LoggerFactory.getLogger(BasicAuthorizationProvider.class);
     RestTemplate restTemplate = new RestTemplate();
-    String url = "localhost:14002";
+    String url = "host.docker.internal:14002/internal/password/";
     public String getPass(String username) {
 
-        ResponseEntity<String> response = restTemplate.getForEntity(url + "/1", String.class);
+      String response = restTemplate.getForObject(url + username, String.class);
 
 
-        if (username.equals("email")) return "pass";
-        return "nopass";
+        if (response == null || response.isBlank() || response.isEmpty()){
+            logger.info("Password non trovata per user : {}",username);
+            throw new BadCredentialsException();
+        };
+        return response;
     }
 }

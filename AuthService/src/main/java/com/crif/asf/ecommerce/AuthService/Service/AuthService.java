@@ -1,5 +1,6 @@
 package com.crif.asf.ecommerce.AuthService.Service;
 
+import com.crif.asf.ecommerce.AuthService.Exception.AccountNotExistException;
 import com.crif.asf.ecommerce.AuthService.Model.BearerToken;
 import com.crif.asf.ecommerce.AuthService.Repository.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,9 @@ public class AuthService {
             return bearerToken.getToken();
         }
     }
-    public boolean checkToken(BearerToken bearerToken) {
-        BearerToken stored = this.authRepository.findById(bearerToken.getIdUser()).orElseThrow();
-        if(bearerToken.getToken().equals(stored.getToken())){
-            return true;
-        }
-        return false;
+    public String checkToken(String token) {
+        BearerToken t = this.authRepository.findByToken(token);
+        if(t==null) throw new AccountNotExistException();
+    return t.getIdUser();
     }
 }
