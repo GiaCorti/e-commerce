@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.crif.asf.ShopService.exception.NotAnAdminException;
 import com.crif.asf.ShopService.exception.NotEnoughBalanceException;
 import com.crif.asf.ShopService.exception.ProductAlreadyExistsException;
 import com.crif.asf.ShopService.exception.ProductNotFoundException;
 import com.crif.asf.ShopService.exception.ProductNotInCartException;
+import com.crif.asf.ShopService.exception.TokenNotValidException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -44,7 +46,17 @@ public class ControllerAdvice {
 
     @ExceptionHandler(ProductNotInCartException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Product not in cart")
-    void ProductNotInCartExceptionExceptionHandle(ProductNotInCartException exc) {
+    void ProductNotInCartExceptionHandle(ProductNotInCartException exc) {
+    }
+
+    @ExceptionHandler(TokenNotValidException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Token not valid")
+    void TokenNotValidExceptionHandle(TokenNotValidException exc) {
+    }
+
+    @ExceptionHandler(NotAnAdminException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Not an admin")
+    void NotAnAdminExceptionHandle(NotAnAdminException exc) {
     }
 
     @ExceptionHandler(SQLException.class)

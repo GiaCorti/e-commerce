@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired
     private CartService cartService;
     @Autowired
-    private UserHelperService userHelperService;
+    private AuthService userHelperService;
 
     @Transactional
     public List<Order> buy(String idUser) {

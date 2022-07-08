@@ -29,7 +29,7 @@ public class Comment {
     private Integer id;
 
     @Column(name = "id_user")
-    private Integer idUser;
+    private String idUser;
 
     @ManyToOne
     @JoinColumn(name = "id_product")

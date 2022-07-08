@@ -24,8 +24,10 @@ public class CommentService {
 	return commentRepository.findByIdProduct(id);
     }
 
-    public void insertNewComment(Comment c) {
+    public void insertNewComment(Comment c, String idUser) {
+
 	c.setCommentDate(LocalDateTime.now());
+	c.setIdUser(idUser);
 	commentRepository.save(c);
     }
 
