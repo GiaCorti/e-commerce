@@ -22,7 +22,11 @@ public class AuthService {
     }
     public String checkToken(String token) {
         BearerToken t = this.authRepository.findByToken(token);
-        if(t==null) throw new AccountNotExistException();
+        if(t==null) return null;
     return t.getIdUser();
+    }
+
+    public boolean isTokenValid(String token) {
+        return this.authRepository.existsByToken(token);
     }
 }

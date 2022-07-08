@@ -15,4 +15,9 @@ public class InternalController {
     public String checkToken(@RequestParam String token) {
         return this.authService.checkToken(token);
     }
+
+    @GetMapping("checkToken")
+    public boolean isTokenValid(@RequestParam String token){
+        return this.authService.isTokenValid(token);
+    }
 }

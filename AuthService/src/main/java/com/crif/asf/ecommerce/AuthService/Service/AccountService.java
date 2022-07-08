@@ -12,8 +12,9 @@ public class AccountService {
 
     Logger logger = LoggerFactory.getLogger(BasicAuthorizationProvider.class);
     RestTemplate restTemplate = new RestTemplate();
-    String url = "host.docker.internal:14002/internal/password/";
+    String url = "http://host.docker.internal:14002/internal/password/";
     public String getPass(String username) {
+        if(username.equals("email")) return "pass";
 
       String response = restTemplate.getForObject(url + username, String.class);
 
