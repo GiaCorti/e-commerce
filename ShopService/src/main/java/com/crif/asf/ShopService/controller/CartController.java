@@ -49,7 +49,7 @@ public class CartController {
     }
 
     @GetMapping("/buy")
-    public Order buy() {
+    public List<Order> buy() {
 	return orderService.buy(idUser);
     }
 

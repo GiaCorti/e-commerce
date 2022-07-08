@@ -3,6 +3,7 @@ package com.crif.asf.ShopService.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -25,7 +26,7 @@ public class OrderService {
     private UserHelperService userHelperService;
 
     @Transactional
-    public Order buy(String idUser) {
+    public List<Order> buy(String idUser) {
 
 	// get current cart of idUser
 	List<Cart> cartsToProcess = cartService.getCart(idUser);
@@ -45,12 +46,13 @@ public class OrderService {
 
 	// save in orders table
 	final String idOrder = UUID.randomUUID().toString();
-	cartsToProcess
+	List<Order> orderList = cartsToProcess
 		.stream()
-		.forEach(c -> orderRepository.save(
-			new Order(idOrder, c, LocalDateTime.now(), tot)));
+		.map(c -> new Order(idOrder, c, LocalDateTime.now(),
+			c.getProduct().getPrice() * c.getQty()))
+		.collect(Collectors.toList());
 
-	// TODO return a Receipt Object
-	return null;
+	orderRepository.saveAll(orderList);
+	return orderList;
     }
 }
