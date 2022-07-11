@@ -1,0 +1,5 @@
+server:
+  port: 14000
+logging:
+  level:
+    com.crif.asf.md4giacorti.md4giacortiesercitazione1: DEBUG
