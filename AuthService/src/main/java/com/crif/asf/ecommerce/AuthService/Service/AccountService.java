@@ -12,15 +12,32 @@ public class AccountService {
 
     Logger logger = LoggerFactory.getLogger(BasicAuthorizationProvider.class);
     RestTemplate restTemplate = new RestTemplate();
-    String url = "http://host.docker.internal:14002/internal/password/";
-    public String getPass(String username) {
-        if(username.equals("email")) return "pass";
+    String url = "http://host.docker.internal:14002/internal/";
+    public String getPass(String email) {
+        if(email.equals("email")) return "pass";
 
-      String response = restTemplate.getForObject(url + username, String.class);
+      String response = restTemplate.getForObject(url +"password/"+ email, String.class);
 
 
         if (response == null || response.isBlank() || response.isEmpty()){
-            logger.info("Password non trovata per user : {}",username);
+            logger.info("Password non trovata per user : {}",email);
+            throw new BadCredentialsException();
+        };
+        return response;
+    }
+
+    public boolean isAdmin(String userId) {
+
+        boolean response = restTemplate.getForObject(url +"isAdmin/"+ userId, boolean.class);
+        return response;
+    }
+
+    public String getId(String email) {
+        String response = restTemplate.getForObject(url +"id/"+ email, String.class);
+
+
+        if (response == null || response.isBlank() || response.isEmpty()){
+            logger.info("Password non trovata per user : {}",email);
             throw new BadCredentialsException();
         };
         return response;
