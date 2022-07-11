@@ -8,19 +8,46 @@ class UserModel(BaseModel):
     Structure Example
     schema_extra = {
         "example": {
-            "fiscal_code": "VHHBPF48A31B393K",
-            "name": "John",
-            "surname": "Doe",
+            "email": "johndoe@example.com",
+            "firstName": "John",
+            "lastName": "Doe",
+            "password":"",
             "birthday": "12/03/1994",
-            "wallet": 23,
+            "role": admin,
+            "balance": 0
         }
     }
     """
-    fiscal_code: str = Field(...)
-    name: str = Field(...)
-    surname: str = Field(...)
+    email: str = Field(...)
+    firstName: str = Field(...)
+    lastName: str = Field(...)
+    password: str = Field(...)
     birthday: str = Field(...)
-    wallet: str = Field(...)
+    role: str = Field(...)
+    balance: float = Field(...)
+
+
+class UserRegisterDto(BaseModel):
+
+    email: str = Field(...)
+    firstName: str = Field(...)
+    lastName: str = Field(...)
+    password: str = Field(...)
+    birthday: str = Field(...)
+
+
+class UserListDto(BaseModel):
+
+    email: str = Field(...)
+    firstName: str = Field(...)
+    lastName: str = Field(...)
+    password: str = Field(...)
+    role: str = Field(...)
+    balance: float = Field(...)
+
+
+class User(BaseModel):
+    id: str = Field(..., alias='_id')
 
 
 class UpdateUserModel(BaseModel):
@@ -29,16 +56,32 @@ class UpdateUserModel(BaseModel):
     Structure Example
     schema_extra = {
         "example": {
-            "fiscal_code": "VHHBPF48A31B393K",
-            "name": "John",
-            "surname": "Doe",
-            "birthday": "12/03/1994",
-            "wallet": 10,
+            "email": "johndoe@example.com",
+            "firstName": "John",
+            "lastName": "Doe",
+            "password": "",
+            "birthday": "10/10/2022",
+            "role": "admin",
+            "balance": 0
         }
     }
     """
-    fiscal_code: Optional[str]
-    name: Optional[str]
-    surname: Optional[str]
+    email: Optional[str]
+    firstName: Optional[str]
+    lastName: Optional[str]
+    password: Optional[str]
     birthday: Optional[str]
-    wallet: Optional[str]
+    role: Optional[str]
+    balance: Optional[float]
+
+
+class UpdateRole(BaseModel):
+    role: str = Field(...)
+
+
+class UpdateFund(BaseModel):
+    balance: float = Field(...)
+
+
+class Getpass(BaseModel):
+    password: str = Field(...)
