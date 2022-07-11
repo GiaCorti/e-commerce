@@ -10,17 +10,12 @@ public class AuthService {
     @Autowired
     private RestTemplate restTemplate;
 
+    private static final String AUTH_SERVICE_URL = "http://host.docker.internal:14000/internal";
     // private static final String AUTH_SERVICE_URL =
-    // "http://host.docker.internal:14000/internal";
-    private static final String AUTH_SERVICE_URL = "http://localhost:14000/internal";
+    // "http://localhost:14000/internal";
     private static final String GET_USER = "/getUser";
     private static final String CHECK_TOKEN = "/checkToken";
     private static final String IS_ADMIN = "/checkAdmin";
-
-    // Rest Template request to AccountService
-    public Double getBalance(String idUser) {
-	return 1000000.0;
-    }
 
     // Rest Template request to AuthService
     public boolean isTokenValid(String token) {

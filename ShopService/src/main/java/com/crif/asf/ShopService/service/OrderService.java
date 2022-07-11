@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired
     private CartService cartService;
     @Autowired
-    private AuthService userHelperService;
+    private AccountService accountService;
 
     @Transactional
     public List<Order> buy(String idUser) {
@@ -38,11 +38,14 @@ public class OrderService {
 		.reduce(0.0, Double::sum);
 
 	// check if balance is enough
-	if (userHelperService.getBalance(idUser) < tot)
+	if (accountService.getBalance(idUser) < tot)
 	    throw new NotEnoughBalanceException();
 
 	// set all not completed carts to completed
 	cartService.setCompletedCart(idUser);
+
+	// subtract balance
+	accountService.subtractBalance(idUser, tot);
 
 	// save in orders table
 	final String idOrder = UUID.randomUUID().toString();
