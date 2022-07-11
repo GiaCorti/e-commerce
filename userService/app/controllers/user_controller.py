@@ -1,32 +1,49 @@
 from fastapi import APIRouter, Body
+from fastapi import Request
 
-from models.user_model import UserModel, UpdateUserModel
-from services.user_services import UserService
+from models.user_model import UpdateUserModel, UpdateRole, UserRegisterDto, UpdateFund
+from services.user_service import UserService
 
 router = APIRouter()
 user_service = UserService()
 
 
-@router.post("/")
-async def add_user(user: UserModel = Body(...)):
-    return await user_service.add_user_data(user)
+@router.post("/account/register/")
+async def add_user(user: UserRegisterDto = Body(...)):
+    return await user_service.register_user(user)
 
 
-@router.get("/")
-async def get_users():
-    return await user_service.get_users()
+@router.get("/account/")
+async def get_users(request: Request):
+    token = request.headers.get("Authorization")
+    return await user_service.get_users(token)
 
 
-@router.get("/{fiscal_code}")
-async def get_id(fiscal_code: str):
-    return await user_service.get_user_data(fiscal_code)
+@router.get("/account/{id_account}")
+async def get_user(id_account: str, request: Request):
+    token = request.headers.get("Authorization")
+    return await user_service.get_user_data(id_account, token)
 
 
-@router.put("/{fiscal_code}")
-async def update_user_data(fiscal_code: str, req: UpdateUserModel = Body(...)):
-    return await user_service.update_user_data(fiscal_code, req)
+@router.put("/account/{id_account}")
+async def update_user(id_account: str, request: Request, req: UpdateUserModel = Body(...)):
+    token = request.headers.get("Authorization")
+    return await user_service.update_user_data(id_account, token, req)
 
 
-@router.delete("/{fiscal_code}")
-async def delete_user_data(fiscal_code: str):
-    return await user_service.delete_user_data(fiscal_code)
+@router.delete("/account/{id_account}")
+async def delete_user(id_account: str, request: Request):
+    token = request.headers.get("Authorization")
+    return await user_service.delete_user_data(id_account, token)
+
+
+@router.patch("/account/")
+async def change_role(request: Request, role: str, id_user: str):
+    token = request.headers.get("Authorization")
+    return await user_service.change_role(token, role, id_user)
+
+
+@router.patch("/account/{id_account}")
+async def add_fund(id_account: str, request: Request, balance: float):
+    token = request.headers.get("Authorization")
+    return await user_service.add_fund(id_account, token, balance)
