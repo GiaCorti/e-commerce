@@ -1,10 +1,9 @@
-from bson import ObjectId
-
-from database import user_connector, user_collection
-from responses.base_response import SuccessResponse, ConflictException, NotFoundException, BadRequestException
+from database import user_connector
+from responses.base_response import ConflictException, NotAllowedException
 from utils.base_logger import BaseLogger
 from repositories.user_repository import UserRepository
-from models.user_model import UserModel, UpdateUserModel, UpdateRole
+from models.user_model import UpdateUserModel, UpdateRole, UpdateFund, UserRegisterDto
+import requests
 
 
 class UserService(BaseLogger):
@@ -13,68 +12,82 @@ class UserService(BaseLogger):
         super().__init__()
         self.repository = UserRepository(user_connector)
 
-    async def register_user(self, user: UserModel):
+    async def register_user(self, user: UserRegisterDto):
         find_user = await self.repository.retrieve_user_by_email(user.email)
         if find_user:
             ex = ConflictException(description=f'User identified by email {user.email} already exists')
             raise ex
         self.logger.info(f"Starting to add a new user {user.email} inside database")
-        new_user = await self.repository.add_user(user)
+        req = {k: v for k, v in user.dict().items() if v is not None}
+        new_user = await self.repository.add_user(req)
         self.logger.info(f"Successfully added user {new_user} inside database")
-        return SuccessResponse(user)
+        return user
 
-    async def get_users(self):
-        users = await self.repository.retrieve_users()
+    async def get_users(self, header: str):
+        lens = len(header)
+        token = header[7:lens + 1]
+        url = 'http://host.docker.internal:14000/internal/getUser?token='
+        id_exec = requests.get(url + token)
+        users = await self.repository.retrieve_users(id_exec)
         if users:
-            return SuccessResponse(users)
+            return users
 
-    async def get_user_data(self, email: str):
-        user = await self.repository.retrieve_user_by_email(email)
-        if not user:
-            ex = NotFoundException(description=f'User identified by email {email} not exists')
+    async def get_user_data(self, id_user: str, header: str):
+        lens = len(header)
+        token = header[7:lens + 1]
+        url = 'http://host.docker.internal:14000/internal/getUser?token='
+        id_exec = requests.get(url + token)
+        self.logger.info(f"id_exec: {id_exec}, id_user: {id_user}, is_admin: {self.repository.is_admin(id_exec)}")
+        if id_exec == id_user or self.repository.is_admin(id_exec):
+            user = await self.repository.retrieve_user(id_user)
+            return user
+        else:
+            ex = NotAllowedException(description="Permission required")
             raise ex
-        return SuccessResponse(user)
-
-    async def get_password(self, email: str):
-        user = await self.repository.return_user_password(email)
-        if not user:
-            ex = NotFoundException(description=f'User identified by email {email} not exists')
-            raise ex
-        return SuccessResponse(user)
-
-    async def get_id(self, id: str):
-        user = await self.repository.retrieve_id(id)
-        if not user:
-            ex = NotFoundException(description=f'User identified by email not exists')
-            raise ex
-        return SuccessResponse(user)
 
 
-    async def update_user_data(self, email: str, req: UpdateUserModel):
+    async def update_user_data(self, id_user: str, header: str, req: UpdateUserModel):
+        lens = len(header)
+        token = header[7:lens+1]
+        url = 'http://host.docker.internal:14000/internal/getUser?token='
+        id_exec = requests.get(url + token)
         req = {k: v for k, v in req.dict().items() if v is not None}
-        updated_user = await self.repository.update_user(email, req)
-        if updated_user:
-            return SuccessResponse(
-                "User with email: {} updated successfully".format(email)
-            )
-        ex = BadRequestException(description=f'User identified by {email} was not found ')
-        raise ex
-
-    async def delete_user_data(self, email: str):
-        deleted_user = await self.repository.delete_user(email)
-        if not deleted_user:
-            ex = NotFoundException(description=f'User identified by email {email} not exists')
+        if id_exec == id_user or self.repository.is_admin(id_exec):
+            await self.repository.update_user(id_user, req)
+            return "User: {} data updated".format(id_user)
+        else:
+            ex = NotAllowedException(description="Permission required")
             raise ex
-        return SuccessResponse(
-            "User with email: {} removed".format(email)
-        )
 
-    async def change_role(self, email: str, req:UpdateRole):
-        req = {k: v for k, v in req.dict().items() if v is not None}
-        updated_user = await self.repository.update_user(email, req)
-        if updated_user:
-            return SuccessResponse(
-                "User role with email: {} updated successfully".format(email)
-            )
-        ex = BadRequestException(description=f'User identified by {email} was not found ')
-        raise ex
+
+    async def delete_user_data(self, id_user: str, header: str):
+        lens = len(header)
+        token = header[7:lens+1]
+        url = 'http://host.docker.internal:14000/internal/getUser?token='
+        id_exec = requests.get(url + token)
+        if id_exec == id_user or self.repository.is_admin(id_exec):
+            await self.repository.delete_user(id_user)
+            return "User: {} removed".format(id_user)
+        else:
+            ex = NotAllowedException(description="Permission required")
+            raise ex
+
+    async def change_role(self, header: str, role: str, id_user: str):
+        lens = len(header)
+        token = header[7:lens + 1]
+        url = 'http://host.docker.internal:14000/internal/getUser?token='
+        id_exec = requests.get(url + token)
+        await self.repository.update_user_by_admin(id_exec, id_user, role)
+        return "User: {} role updated successfully".format(id_user)
+
+    async def add_fund(self, id_user, header: str, balance: float):
+        lens = len(header)
+        token = header[7:lens + 1]
+        url = 'http://host.docker.internal:14000/internal/getUser?token='
+        id_exec = requests.get(url + token)
+        if id_exec == id_user or self.repository.is_admin(id_exec):
+            await self.repository.update_fund(id_user, balance)
+            return "Fund added"
+        else:
+            ex = NotAllowedException( description="Permission required" )
+            raise ex

@@ -1,7 +1,4 @@
-from datetime import date, datetime
 from typing import Optional
-
-from bson import ObjectId
 from pydantic import BaseModel, Field
 
 
@@ -38,22 +35,19 @@ class UserRegisterDto(BaseModel):
     password: str = Field(...)
     birthday: str = Field(...)
 
+
 class UserListDto(BaseModel):
 
-    email: str = Field( ... )
-    firstName: str = Field( ... )
-    lastName: str = Field( ... )
-    password: str = Field( ... )
-    role: str = Field( ... )
-    balance: float = Field( ... )
+    email: str = Field(...)
+    firstName: str = Field(...)
+    lastName: str = Field(...)
+    password: str = Field(...)
+    role: str = Field(...)
+    balance: float = Field(...)
 
-class User_1(BaseModel):
+
+class User(BaseModel):
     id: str = Field(..., alias='_id')
-
-def _helper(UserModel) -> dict:
-    return {
-        "id": str(UserModel["_id"])
-    }
 
 
 class UpdateUserModel(BaseModel):
@@ -80,10 +74,14 @@ class UpdateUserModel(BaseModel):
     role: Optional[str]
     balance: Optional[float]
 
-class UpdateRole (BaseModel):
-        role: str
+
+class UpdateRole(BaseModel):
+    role: str = Field(...)
 
 
-class Getpass( BaseModel ):
-    password: str
+class UpdateFund(BaseModel):
+    balance: float = Field(...)
 
+
+class Getpass(BaseModel):
+    password: str = Field(...)
