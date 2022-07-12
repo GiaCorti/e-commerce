@@ -24,7 +24,10 @@ class UserRepository:
             ex = BadRequestException(description="Password field is required")
             raise ex
         user_data['balance'] = 0.0
-        user_data['role'] = "USER"
+        if user_collection.count_documents({}) == 0:
+            user_data['role'] = "ADMIN"
+        else:
+            user_data['role'] = "USER"
         new_user = user_collection.insert_one(user_data)
         return new_user
 

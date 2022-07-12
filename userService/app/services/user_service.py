@@ -27,7 +27,8 @@ class UserService(BaseLogger):
         lens = len(header)
         token = header[7:lens + 1]
         url = 'http://host.docker.internal:14000/internal/getUser?token='
-        id_exec = requests.get(url + token)
+        id_exec = requests.get(url + token).text
+        print("id_exec: ", id_exec)
         users = await self.repository.retrieve_users(id_exec)
         if users:
             return users
@@ -36,8 +37,9 @@ class UserService(BaseLogger):
         lens = len(header)
         token = header[7:lens + 1]
         url = 'http://host.docker.internal:14000/internal/getUser?token='
-        id_exec = requests.get(url + token)
-        self.logger.info(f"id_exec: {id_exec}, id_user: {id_user}, is_admin: {self.repository.is_admin(id_exec)}")
+        id_exec = requests.get(url + token).text
+        print("id_exec: ", id_exec)
+        print("id_user: ", id_user)
         if id_exec == id_user or self.repository.is_admin(id_exec):
             user = await self.repository.retrieve_user(id_user)
             return user
@@ -50,7 +52,9 @@ class UserService(BaseLogger):
         lens = len(header)
         token = header[7:lens+1]
         url = 'http://host.docker.internal:14000/internal/getUser?token='
-        id_exec = requests.get(url + token)
+        id_exec = requests.get(url + token).text
+        print("id_exec: ", id_exec)
+        print("id_user: ", id_user)
         req = {k: v for k, v in req.dict().items() if v is not None}
         if id_exec == id_user or self.repository.is_admin(id_exec):
             await self.repository.update_user(id_user, req)
@@ -64,7 +68,9 @@ class UserService(BaseLogger):
         lens = len(header)
         token = header[7:lens+1]
         url = 'http://host.docker.internal:14000/internal/getUser?token='
-        id_exec = requests.get(url + token)
+        id_exec = requests.get(url + token).text
+        print("id_exec: ", id_exec)
+        print("id_user: ", id_user)
         if id_exec == id_user or self.repository.is_admin(id_exec):
             await self.repository.delete_user(id_user)
             return "User: {} removed".format(id_user)
@@ -76,7 +82,9 @@ class UserService(BaseLogger):
         lens = len(header)
         token = header[7:lens + 1]
         url = 'http://host.docker.internal:14000/internal/getUser?token='
-        id_exec = requests.get(url + token)
+        id_exec = requests.get(url + token).text
+        print("id_exec: ", id_exec)
+        print("id_user: ", id_user)
         await self.repository.update_user_by_admin(id_exec, id_user, role)
         return "User: {} role updated successfully".format(id_user)
 
@@ -84,7 +92,9 @@ class UserService(BaseLogger):
         lens = len(header)
         token = header[7:lens + 1]
         url = 'http://host.docker.internal:14000/internal/getUser?token='
-        id_exec = requests.get(url + token)
+        id_exec = requests.get(url + token).text
+        print("id_exec: ", id_exec)
+        print("id_user: ", id_user)
         if id_exec == id_user or self.repository.is_admin(id_exec):
             await self.repository.update_fund(id_user, balance)
             return "Fund added"
