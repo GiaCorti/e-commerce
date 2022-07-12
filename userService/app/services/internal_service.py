@@ -27,7 +27,7 @@ class InternalService(BaseLogger):
 
     async def get_balance(self, id: str):
         user_balance = await self.repository.retrieve_balance(id)
-        if not user_balance:
+        if user_balance is None:
             ex = NotFoundException(description="Balance field required")
             raise ex
         return user_balance

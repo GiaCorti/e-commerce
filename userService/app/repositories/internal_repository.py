@@ -29,13 +29,13 @@ class InternalRepository:
         else:
             return False
 
-    async def retrieve_id(self, email: str) -> dict:
+    async def retrieve_id(self, email: str):
         user = user_collection.find_one({"email": email})
         var = str(user['_id'])
         if user:
             return var
 
-    async def retrieve_balance(self, id: str) -> dict:
+    async def retrieve_balance(self, id: str):
         user = user_collection.find_one({"_id": ObjectId(id)})
         var = float(user['balance'])
         if user:
