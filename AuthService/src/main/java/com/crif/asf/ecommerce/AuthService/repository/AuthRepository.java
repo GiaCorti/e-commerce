@@ -1,8 +1,12 @@
-package com.crif.asf.ecommerce.AuthService.repository;
+package com.crif.asf.ecommerce.AuthService.Repository;
 
-import com.crif.asf.ecommerce.AuthService.model.BearerToken;
+import com.crif.asf.ecommerce.AuthService.Model.BearerToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface AuthRepository extends MongoRepository<BearerToken, String> {
 
+
+    BearerToken findByToken(String token);
+
+    boolean existsByToken(String token);
 }

@@ -2,10 +2,7 @@ package com.crif.asf.ecommerce.AuthService.Authentication;
 
 import com.crif.asf.ecommerce.AuthService.Exception.AuthenticationException;
 import com.crif.asf.ecommerce.AuthService.Service.AccountService;
-<<<<<<< HEAD
-import com.crif.asf.ecommerce.AuthService.model.Account;
-=======
->>>>>>> feature/Auth_first_implementation
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,37 +30,23 @@ public class BasicAuthorizationProvider implements AuthenticationProvider {
         String username = authentication.getPrincipal().toString(); // (1)
         String password = authentication.getCredentials().toString();
         String psw = accountService.getPass(username);
-<<<<<<< HEAD
-        logger.info("Email: {}  pass: {}",username,password);
-        if(psw.equals(password)){
 
-             return  new UsernamePasswordAuthenticationToken(username,password, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
-        }
-        else throw new AuthenticationException();
-=======
         logger.info("Email: {}  pass: {}", username, password);
         if (psw.equals(password)) {
 
             return new UsernamePasswordAuthenticationToken(username, password, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
         } else throw new AuthenticationException();
->>>>>>> feature/Auth_first_implementation
 
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
 
-<<<<<<< HEAD
-        if ( authentication.isAssignableFrom( BasicAuth.class ) ) {
-=======
         if (authentication.isAssignableFrom(BasicAuth.class)) {
->>>>>>> feature/Auth_first_implementation
+
             return true;
         }
         return false;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> feature/Auth_first_implementation
+

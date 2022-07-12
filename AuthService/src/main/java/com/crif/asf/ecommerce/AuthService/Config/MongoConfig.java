@@ -1,9 +1,6 @@
 package com.crif.asf.ecommerce.AuthService.Config;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/Auth_first_implementation
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -24,11 +21,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-<<<<<<< HEAD
-        ConnectionString connectionString = new ConnectionString("mongodb://localhost:15000/AuthDB");
-=======
+
         ConnectionString connectionString = new ConnectionString("mongodb://host.docker.internal:15000/AuthDB");
->>>>>>> feature/Auth_first_implementation
+
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .build();

@@ -1,4 +1,4 @@
-package com.crif.asf.ecommerce.AuthService.model;
+package com.crif.asf.ecommerce.AuthService.Model;
 
 public class Account {
 

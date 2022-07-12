@@ -1,4 +1,4 @@
-package com.crif.asf.ecommerce.AuthService.model;
+package com.crif.asf.ecommerce.AuthService.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

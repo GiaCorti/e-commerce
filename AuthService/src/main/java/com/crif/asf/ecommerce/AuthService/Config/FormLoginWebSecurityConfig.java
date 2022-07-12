@@ -2,7 +2,6 @@ package com.crif.asf.ecommerce.AuthService.Config;
 
 import com.crif.asf.ecommerce.AuthService.Authentication.BasicAuthorizationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -16,28 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-    @Configuration
-    @Order(1)
-    public class FormLoginWebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-       @Autowired
-        private BasicAuthorizationProvider basicAuthorizationProvider;
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .antMatcher("/auth/**").httpBasic()
-                    .and().
-                    csrf().disable()
-                    .cors()
-                    .and()
-                    .authorizeRequests()
-                    .antMatchers("/auth/**").authenticated()
-                    .and()
-                    .authenticationProvider(basicAuthorizationProvider);
-        }
-    }
-=======
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -64,4 +41,4 @@ public class FormLoginWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(basicAuthorizationProvider);
     }
 }
->>>>>>> feature/Auth_first_implementation
+
