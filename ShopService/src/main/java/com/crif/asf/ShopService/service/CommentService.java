@@ -14,9 +14,9 @@ import com.crif.asf.ShopService.repository.CommentRepository;
 public class CommentService {
 
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
     @Autowired
-    CatalogService catalogService;
+    private CatalogService catalogService;
 
     public List<Comment> getComments(Integer id) {
 	if (!catalogService.existsById(id))

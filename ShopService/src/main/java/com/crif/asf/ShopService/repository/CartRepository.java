@@ -14,10 +14,10 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 
     @Modifying
     @Query("delete from Cart c where c.product.id=?1 and c.idUser=?2 and c.completed=false")
-    void deleteByIdUserAndIdProduct(Integer idProduct, String idUser);
+    void deleteByIdProductAndIdUser(Integer idProduct, String idUser);
 
     @Query("select case when count(c)> 0 then true else false end "
 	    + "from Cart c where c.product.id=?1 and c.idUser=?2 and c.completed=false")
-    boolean existsByIdUserAndIdProduct(Integer idProduct, String idUser);
+    boolean existsByIdProductAndIdUser(Integer idProduct, String idUser);
 
 }

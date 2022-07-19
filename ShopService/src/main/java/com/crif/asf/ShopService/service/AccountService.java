@@ -18,7 +18,6 @@ public class AccountService {
 
     // Rest Template request to AccountService (id nel path, nome:balance)
     public Double getBalance(String idUser) {
-	// return 1000000.0;
 
 	return restTemplate.getForObject(
 		String.format("%s%s/?user=%s",

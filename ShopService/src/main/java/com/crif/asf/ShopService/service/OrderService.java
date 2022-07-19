@@ -55,7 +55,6 @@ public class OrderService {
 			c.getProduct().getPrice() * c.getQty()))
 		.collect(Collectors.toList());
 
-	orderRepository.saveAll(orderList);
-	return orderList;
+	return orderRepository.saveAll(orderList);
     }
 }

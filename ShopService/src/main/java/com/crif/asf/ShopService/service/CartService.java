@@ -35,10 +35,10 @@ public class CartService {
 
     @Transactional
     public void removeProductFromCart(Integer idProduct, String idUser) {
-	if (!cartRepository.existsByIdUserAndIdProduct(idProduct, idUser))
+	if (!cartRepository.existsByIdProductAndIdUser(idProduct, idUser))
 	    throw new ProductNotInCartException();
 
-	cartRepository.deleteByIdUserAndIdProduct(idProduct, idUser);
+	cartRepository.deleteByIdProductAndIdUser(idProduct, idUser);
     }
 
     public void setCompletedCart(String idUser) {
