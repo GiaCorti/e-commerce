@@ -14,7 +14,7 @@ export class AuthService {
   }
   
   getAuthToken(): any {
-    console.log(sessionStorage.getItem('token'))
+    
     return sessionStorage.getItem('token');
   }
   
@@ -37,9 +37,9 @@ export class AuthService {
     ).subscribe(res => {
       sessionStorage.setItem('token', res);
     console.log(sessionStorage.getItem( 'token' ));
-      
+    return of("")
   })
-  return of()
+  return of("")
   }
 
 

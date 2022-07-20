@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit {
 
     let enc = btoa(passemail);
 
-    this.authService.login(enc).subscribe(() =>
-      this.location.back()
+    this.authService.login(enc).subscribe(() =>{console.log("sub component")
+      this.location.back()}
     );
     
   }
