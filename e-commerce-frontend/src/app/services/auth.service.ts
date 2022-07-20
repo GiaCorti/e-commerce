@@ -29,7 +29,7 @@ export class AuthService {
 
   url = "http://localhost:14000/auth/"
 
-  login(userinfo : string): void{
+  login(userinfo : string): Observable<any>{
     this.http.get(`${this.url}login`,{headers: new HttpHeaders({
       'Authorization': `Basic ${userinfo}`
     }),responseType: "text"}).pipe(
@@ -37,8 +37,9 @@ export class AuthService {
     ).subscribe(res => {
       sessionStorage.setItem('token', res);
     console.log(sessionStorage.getItem( 'token' ));
-   // this.router.navigate(['/accounts/'])
+      
   })
+  return of()
   }
 
 

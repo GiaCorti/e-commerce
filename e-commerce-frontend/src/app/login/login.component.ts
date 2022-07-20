@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private location: Location) { }
 
   ngOnInit(): void {
   }
@@ -28,7 +30,9 @@ export class LoginComponent implements OnInit {
 
     let enc = btoa(passemail);
 
-   this.authService.login(enc);
+    this.authService.login(enc).subscribe(() =>
+      this.location.back()
+    );
     
   }
 
