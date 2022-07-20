@@ -1,1 +1,33 @@
-<p>catalog works!</p>
+<p-table [value]="catalog" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            Products
+            <p-button icon="pi pi-refresh"></p-button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>
+                <a class = "detail" routerLink="product/detail/{{product.id}}">{{product.id}}</a>
+            </td>
+            <td>{{product.name}}</td>
+            <td><img [src]="'assets/images/' + product.id + format" width="100" class="shadow-4" /></td>
+            <td>{{product.price | currency:'USD'}}</td>
+            <td>{{product.description}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+            In total there are {{catalog ? catalog.length : 0 }} products.
+        </div>
+    </ng-template>
+</p-table>

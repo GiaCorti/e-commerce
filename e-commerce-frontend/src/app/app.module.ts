@@ -23,6 +23,9 @@ import { AccountDetailComponent } from './account-detail/account-detail.componen
 import { AccountsListComponent } from './accounts-list/accounts-list.component';
 import { CommentsListComponent } from './comments-list/comments-list.component';
 import { CommentAddComponent } from './comment-add/comment-add.component';
+import {TableModule} from 'primeng/table';
+import {HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -51,9 +54,15 @@ import { CommentAddComponent } from './comment-add/comment-add.component';
     FormsModule,
     InputTextModule,
     PasswordModule,
-    HttpClientModule
+    HttpClientModule,
+    TableModule
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+   }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

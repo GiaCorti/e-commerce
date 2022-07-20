@@ -13,6 +13,7 @@ export class AuthInterceptorService implements HttpInterceptor{
     
   const token = this.authService.getAuthToken();
 
+  console.log(token + "hi");
    if (token) {
      
      request = request.clone({

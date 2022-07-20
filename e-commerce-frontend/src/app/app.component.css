@@ -1,0 +1,50 @@
+ /*----------grid settings----------*/
+
+ .container {
+    display: grid;
+  
+    grid-template-areas:
+      "header header header"
+      "content content content"
+      "footer footer footer";
+  
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    grid-gap: 10px;
+  
+    height: 97vh;
+  }
+  
+  header {
+    grid-area: header;
+    display: flex;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: medium;
+    background-color: rgb(255, 254, 180);
+    margin-bottom: 20px;
+  }
+  
+  nav {
+    grid-area: nav;
+    margin-left: 0.1rem;
+  }
+  
+  main {
+    grid-area: content;
+  }
+  
+  aside {
+    grid-area: side;
+    margin-right: 0.5rem;
+  }
+  
+  footer {
+    grid-area: footer;
+    padding-bottom: 1px;
+  }
+
+   /*----------grid settings----------*/

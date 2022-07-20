@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 export class AuthService {
   
   getAuthToken(): any {
+    console.log(sessionStorage.getItem('token'))
     return sessionStorage.getItem('token');
   }
   
