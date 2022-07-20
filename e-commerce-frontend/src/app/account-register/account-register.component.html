@@ -1,1 +1,45 @@
-<p>account-register works!</p>
+<body>
+    <h2>Insert new Account</h2>
+    
+    <p-button type="button"  label="Home" icon="pi pi-home"  [routerLink]="['../../home']" ></p-button>
+    <br>
+    <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <br>
+        <div class="p-float-label">
+            <input pInputText  id="email" type="text" formControlName="email" required minlength="3" maxlength="50">
+            <label for="email">Email</label>
+          
+          </div>
+          <br>
+          <div class="p-float-label">
+            
+            <input pInputText id="firstname" type="text" formControlName="firstname" required minlength="3" maxlength="50">
+            <label for="firstname" icon="pi pi-at">FirstName</label>
+          </div>
+          <br>
+          <div class="p-float-label">
+            
+            <input pInputText id="lastname" type="text" formControlName="lastname" required minlength="3" maxlength="50">
+            <label for="lastname" icon="pi pi-at">LastName</label>
+          </div>
+          <br>
+          <div class="p-float-label">
+            
+            <input pPassword type="password" weakLabel="Weak :(" mediumLabel="Medium :|" strongLabel="Strong :)" toggleMask:true id="password" type="password" formControlName="password" required minlength="3" maxlength="50">
+            <label for="password">Password</label>
+          </div>
+          <br>
+          <div class="p-float-label">
+            
+            <p-calendar id="birthday" formControlName="birthday"></p-calendar>
+            <label for="birthday">Birthday</label>
+          </div>
+          
+          <br>
+          <br>
+          
+          <p-button type="submit" label="Save" class="p-button-success"></p-button>
+        
+      
+      </form>
+    </body>
