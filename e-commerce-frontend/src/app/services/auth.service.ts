@@ -9,6 +9,10 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
   
+  getAuthToken(): any {
+    return sessionStorage.getItem('token');
+  }
+  
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -20,14 +24,13 @@ export class AuthService {
 
   url = "http://localhost:14000/auth/"
 
-  login(userinfo : string, email: any): void{
-    this.http.get<Token>(`${this.url}login`,{headers: new HttpHeaders({
+  login(userinfo : string): void{
+    this.http.get(`${this.url}login`,{headers: new HttpHeaders({
       'Authorization': `Basic ${userinfo}`
-    })}).pipe(
-      catchError(this.handleError<Token>('login', ))
+    }),responseType: "text"}).pipe(
+      catchError(this.handleError<any>('login', ))
     ).subscribe(res => {
-      sessionStorage.setItem('token', res.token)
-      sessionStorage.setItem('email', email);
+      sessionStorage.setItem('token', res);
     console.log(sessionStorage.getItem( 'token' ));
    // this.router.navigate(['/accounts/'])
   })
@@ -41,7 +44,7 @@ export class AuthService {
 
       console.error(error); 
       //this.router.navigate([`/error/${error.status}`])
-      //alert(`${operation} failed: ${error.message}`);
+      alert(`${operation} failed:${error.status}: ${error.message}`);
       return of(result as T);
     };
   }

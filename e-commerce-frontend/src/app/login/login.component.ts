@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
     let enc = btoa(passemail);
 
-   // this.authService.login(enc,email);
+   this.authService.login(enc);
     
   }
 

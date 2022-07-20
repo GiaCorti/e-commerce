@@ -1,7 +1,7 @@
 package com.crif.asf.ecommerce.AuthService.Service;
 
 
-import com.crif.asf.ecommerce.AuthService.Model.Account;
+
 import org.springframework.stereotype.Service;
 
 import com.crif.asf.ecommerce.AuthService.Authentication.BasicAuthorizationProvider;

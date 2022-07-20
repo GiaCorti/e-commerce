@@ -31,8 +31,8 @@ public class FormLoginWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .antMatcher("/auth/**").httpBasic()
-                .and().
-                csrf().disable()
+                .and()
+                .csrf().disable()
                 .cors()
                 .and()
                 .authorizeRequests()
