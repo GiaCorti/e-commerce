@@ -1,0 +1,24 @@
+<body>
+    <h2>Login</h2>
+    
+    <form class="form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    
+        <div class="p-float-label">
+            <input pInputText  id="email" type="text" formControlName="email" required minlength="3" maxlength="50">
+            <label for="email">Email</label>
+          
+          </div>
+          <br>
+          
+          <div class="p-float-label">
+            
+            <input pPassword type="password" [feedback]=true showClear=true id="password" type="password" formControlName="password" required minlength="3" maxlength="50">
+            <label for="password">Password</label>
+          </div>
+          <br>
+          <br>
+          <p-button type="submit" label="Login" class="p-button-success"></p-button>
+          <p-button type="button"  label="Register" icon="pi pi-plus"  [routerLink]="['../accounts/insert']" ></p-button>
+        
+      </form>
+    </body>
