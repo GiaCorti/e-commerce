@@ -8,11 +8,14 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import {InputTextModule} from 'primeng/inputtext';
 import {PasswordModule} from 'primeng/password';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,8 @@ import {PasswordModule} from 'primeng/password';
     ReactiveFormsModule,
     FormsModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
