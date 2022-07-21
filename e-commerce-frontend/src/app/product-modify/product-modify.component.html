@@ -4,14 +4,14 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">Name</span>
-                <input type="text" pInputText placeholder="Name" [(ngModel)]="product.name">
+                <input type="text" pInputText placeholder="Name" [(ngModel)]="product.name" minlength="1">
             </div>
         </div>
 
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">Price</span>
-                <input type="text" pInputText placeholder="Price" [(ngModel)]="product.price">
+                <input type="number" min = "0.01" step = "1" pInputText placeholder="Price" [(ngModel)]="product.price">
                 <span class="p-inputgroup-addon">$</span>
             </div>
         </div>
@@ -25,5 +25,9 @@
         </div>
     </div>
 
-    <p-button (click)="modifyProduct()"[style]="{'margin-top':'15px'}" label="Submit" icon="pi pi-check" iconPos="right"></p-button>
+    <p-button 
+        (onClick)="modifyProduct()"[style]="{'margin-top':'15px'}" 
+        label="Submit" icon="pi pi-check" iconPos="right" 
+        [disabled]="product.price <= 0.01 || product.name.length < 1">
+    </p-button>
 </div>

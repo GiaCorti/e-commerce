@@ -17,7 +17,6 @@ export class ProductModifyComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location
     ) { }
 
