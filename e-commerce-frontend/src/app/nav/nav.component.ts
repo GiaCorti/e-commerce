@@ -26,7 +26,7 @@ export class NavComponent implements OnInit {
               {label: 'Detail', url:'account/detail/dada', icon:'pi pi-id-card'},
               {label: 'Modify', url:'account/modify/dada',  icon:'pi pi-user-edit'},
               {label: 'Accounts',  icon:'pi pi-users'},
-              {label: 'Logout',  icon:'pi pi-sign-out'}
+              {label: 'Logout',  icon:'pi pi-sign-out', command: () => this.logOut()}
           ]
   }
     ]}
@@ -38,7 +38,7 @@ export class NavComponent implements OnInit {
             items: [
                 {label: 'Detail', url:'account/detail/dada', icon:'pi pi-id-card'},
                 {label: 'Modify', url:'account/modify/dada',  icon:'pi pi-user-edit'},
-                {label: 'Logout',  icon:'pi pi-sign-out'}
+                {label: 'Logout',  icon:'pi pi-sign-out',  command: () => this.logOut()}
             ]
     }
       ]
@@ -46,4 +46,12 @@ export class NavComponent implements OnInit {
     }})
   
   }
+
+  
+
+  logOut(){
+    this.authService.logout();
+  }
 }
+
+

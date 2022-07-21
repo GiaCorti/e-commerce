@@ -54,6 +54,11 @@ export class AuthService {
   return of("")
   }
 
+  logout(){
+    this.isLogged.next(false);
+    sessionStorage.removeItem('token');
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
