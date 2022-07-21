@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { AuthService } from '../services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -12,7 +13,8 @@ export class NavComponent implements OnInit {
   isAdmin = false;
   isLogged:boolean | undefined;
   userid: string = "oo";
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    private location: Location) { }
 
   ngOnInit(): void {
     
@@ -61,6 +63,8 @@ export class NavComponent implements OnInit {
 
   logOut(){
     this.authService.logout();
+    
+    window.location.replace("/home")
   }
 }
 
