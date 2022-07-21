@@ -11,7 +11,11 @@
                     </p-selectButton>
                     <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"
                         [style]="{'margin-top':'15px'}" (click)="getFilteredCatalog(rangeValues[0], rangeValues[1])"></button>
-                </div>
+                    
+                    <button pButton pRipple type="button" label="Add Product" class="p-button-rounded p-button-success"
+                        [style]="{'margin-left':'15px'}" *ngIf="isAdmin" routerLink="/product/add">
+                    </button>
+                    </div>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -34,9 +38,8 @@
                 <td>{{product.price | currency:'USD'}}</td>
                 <td>{{product.description}}</td>
                 <td *ngIf="isAdmin">
-                    <button pButton pRipple type="button" class="p-button-rounded p-button-warning"
+                    <button pButton pRipple type="button" label = "Modify" class="p-button-rounded p-button-warning"
                         routerLink="/product/modify/{{product.id}}">
-                        Modify
                     </button>
                 </td>
             </tr>
@@ -45,6 +48,7 @@
             <div class="flex align-items-center justify-content-between">
                 In total there {{totProducts != 1 ? "are" : "is"}} {{totProducts}}
                 {{totProducts != 1? "products.": "product."}}
+
             </div>
         </ng-template>
     </p-table>
