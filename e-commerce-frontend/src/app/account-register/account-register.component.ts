@@ -30,13 +30,13 @@ export class AccountRegisterComponent implements OnInit {
   onSubmit():void {
     let account = this.registerForm.value;
     let d =new Date(Date.parse(account.birthday!));
-    let date = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    account.birthday = date;
-    //console.log(account)
-
-
-    
-    this.accountService.insertAccount(account).subscribe(() => this.location.back());
+    if(d.getMonth()<9 && d.getDate()<10){
+    let date = `${d.getFullYear()}-0${d.getMonth()+1}-0${d.getDate()}`; account.birthday = date;}
+    else if(d.getMonth()<9){let date = `${d.getFullYear()}-0${d.getMonth()+1}-${d.getDate()}`;account.birthday = date;}
+    else if(d.getDate()<10){let date = `${d.getFullYear()}-${d.getMonth()+1}-0${d.getDate()}`;account.birthday = date;}
+    else{let date = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;account.birthday = date;}
+    //console.log(account);
+   this.accountService.insertAccount(account).subscribe(() => this.location.back());
     
   }
 
