@@ -1,9 +1,6 @@
 <nav>
-    <ul>
-        <li><a routerLink="/home">Home</a></li>
-        <li><a routerLink="product/catalog">Catalog</a></li>
-        <li *ngIf="!isLogged"><a  routerLink="/login">Login</a></li>
-        <li *ngIf="isLogged"><p-menubar [model]="items"></p-menubar></li>
+    <ul> 
+        <li ><p-menubar [model]="items"></p-menubar></li>
     </ul>
 </nav>
 

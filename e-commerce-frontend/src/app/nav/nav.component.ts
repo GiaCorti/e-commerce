@@ -17,6 +17,25 @@ export class NavComponent implements OnInit {
     private location: Location) { }
 
   ngOnInit(): void {
+    this.items = [
+      {
+        label: "Home",
+        icon: 'pi pi-home',
+        routerLink:['home']
+
+      },
+    {
+      label: "Catalog",
+      icon:'pi pi-shopping-bag',
+      routerLink:['product/catalog']
+
+    },
+    {
+      label: "login",
+      icon:'pi pi-sign-in',
+      routerLink:['login']
+
+    }]
     
     this.authService.isLogged.subscribe(res => {this.isLogged = res
       this.authService.getUser().subscribe(re => {
@@ -36,6 +55,18 @@ export class NavComponent implements OnInit {
     if(this.isAdmin){
       this.items = [
         {
+          label: "Home",
+          icon: 'pi pi-home',
+          routerLink:['home']
+  
+        },
+      {
+        label: "Catalog",
+        icon:'pi pi-shopping-bag',
+        routerLink:['product/catalog']
+  
+      },
+        {
           icon: 'pi pi-user',
             items: [
                 {label: 'Detail', routerLink:['/account/detail/'+this.userid], icon:'pi pi-id-card'},
@@ -48,6 +79,18 @@ export class NavComponent implements OnInit {
       else{
   
         this.items = [
+          {
+            label: "Home",
+            icon: 'pi pi-home',
+            routerLink:['home']
+    
+          },
+        {
+          label: "Catalog",
+          icon:'pi pi-shopping-bag',
+          routerLink:['product/catalog']
+    
+        },
           {
             icon: 'pi pi-user',
               items: [
