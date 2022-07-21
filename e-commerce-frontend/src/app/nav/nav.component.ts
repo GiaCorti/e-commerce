@@ -10,9 +10,11 @@ import { AuthService } from '../services/auth.service';
 export class NavComponent implements OnInit {
   items: MenuItem[] = [];
   isAdmin = false;
+  isLogged = false;
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isLogged = this.authService.hasValidAccessToken();
     this.authService.isAdmin().subscribe(res => {this.isAdmin = res;
      
     if(this.isAdmin){
@@ -22,7 +24,7 @@ export class NavComponent implements OnInit {
           items: [
               {label: 'Detail', url:'account/detail/dada', icon:'pi pi-id-card'},
               {label: 'Modify', url:'account/modify/dada',  icon:'pi pi-user-edit'},
-              {label: 'Accounts List',  icon:'pi pi-users'},
+              {label: 'Accounts',  icon:'pi pi-users'},
               {label: 'Logout',  icon:'pi pi-sign-out'}
           ]
   }
