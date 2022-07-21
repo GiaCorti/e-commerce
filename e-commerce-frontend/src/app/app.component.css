@@ -14,6 +14,9 @@
   
     height: 97vh;
   }
+  h1{
+    color: aliceblue;
+  }
   
   header {
     grid-area: header;
@@ -21,10 +24,10 @@
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     justify-content: space-between;
     align-items: center;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 50px;
+    padding-right: 50px;
     font-size: medium;
-    background-color: rgb(255, 254, 180);
+    background-color: #232f3e;
     margin-bottom: 20px;
   }
   

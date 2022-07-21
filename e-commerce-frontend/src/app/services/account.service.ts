@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AccountRegisterDTO } from '../models/AccountRegisterDTO';
+import { Account} from '../models/account';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AccountService {
+  
  
   constructor(private http:HttpClient) { }
 
@@ -25,6 +26,12 @@ export class AccountService {
       catchError(this.handleError<any>('insertAccount', ))
     );
     
+  }
+
+  getDetail(idAccount: string): Observable<Account> {
+    return this.http.get<Account>(`${this.url}${idAccount}`,this.httpOptions).pipe(
+      catchError(this.handleError<any>('insertAccount', ))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

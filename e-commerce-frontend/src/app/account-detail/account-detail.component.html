@@ -1,1 +1,34 @@
-<p>account-detail works!</p>
+<body>
+    <br>
+    <br>  
+    <table ptable class="styled-table">
+        <tr>
+            <td>EMAIL:</td>
+            <td>{{account.email}}</td>
+        </tr>
+        <tr>
+            <td>FIRSTNAME:</td>
+            <td>{{account.firstName}}</td>
+        </tr>
+        <tr>
+            <td>LASTNAME:</td>
+            <td>{{account.lastName}}</td>
+        </tr>
+        <tr>
+            <td>BIRTHDAY:</td>
+            <td>{{account.birthday | date}}</td>
+        </tr>
+        <tr>
+            <td>ROLE:</td>
+            <td>{{account.role}}</td>
+        </tr>
+        <tr>
+            <td>BALANCE:</td>
+            <td>{{account.balance | currency:"USD"}}</td>
+        </tr>
+        
+        
+        
+    </table>
+    
+    </body>
