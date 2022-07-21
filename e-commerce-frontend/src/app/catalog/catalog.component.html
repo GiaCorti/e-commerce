@@ -1,8 +1,21 @@
-<p-table [value]="catalog" responsiveLayout="scroll">
+<p-table [style]="{'width':'100%'}" [value]="catalog" responsiveLayout="scroll">
     <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
             Products
-            <!--<p-button icon="pi pi-refresh"></p-button>-->
+            <div class="slider-container">
+                <h5>Price range: {{rangeValues[0]  + ' - ' + rangeValues[1]}}</h5>
+                <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000" [step]="1" 
+                ></p-slider>
+                <p-selectButton 
+                [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"
+                [style]="{'margin-top':'15px'}">
+                </p-selectButton>
+                <button 
+                pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success" 
+                [style]="{'margin-top':'15px'}"
+                (click)="getFilteredCatalog()"
+                ></button>
+        </div>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -27,7 +40,9 @@
     </ng-template>
     <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-            In total there are {{catalog ? catalog.length : 0 }} products.
+            In total there {{totProducts != 1 ? "are" : "is"}} {{totProducts}} 
+            {{totProducts != 1? "products.": "product."}}
         </div>
     </ng-template>
 </p-table>
+<p-paginator [rows]=rows [totalRecords]=totProducts [rowsPerPageOptions]="[5,10,20,30]" (onPageChange)="paginate($event)"></p-paginator>

@@ -48,6 +48,24 @@ public class CatalogController {
 	return catalogService.findAll(page, numElements);
     }
 
+    @GetMapping("/totProducts")
+    public Long getNumberOfProducts(@RequestHeader("Authorization") String token) {
+	if (!authService.isTokenValid(token))
+	    throw new TokenNotValidException();
+
+	return catalogService.getNumberOfProducts();
+    }
+
+    @GetMapping("/totProductsFiltered")
+    public Long getNumberOfProductsFiltered(@RequestHeader("Authorization") String token,
+	    @RequestParam(name = "min", required = true) Double min,
+	    @RequestParam(name = "max", required = true) Double max) {
+	if (!authService.isTokenValid(token))
+	    throw new TokenNotValidException();
+
+	return catalogService.getNumberOfProductsFiltered(min, max);
+    }
+
     @PostMapping
     public void insertNewProduct(@RequestBody Product p,
 	    @RequestHeader("Authorization") String token) {

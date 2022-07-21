@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
+import { Filter } from '../models/filter';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -8,7 +9,13 @@ import { Product } from '../models/product';
 })
 export class ProductService {
 
-  private url = 'http://localhost:14001/products?page=0&numElements=15';
+
+
+  private url = 'http://localhost:14001/products';
+
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json' })
+  };
 
   mockCatalog: Product[] = [
     {
@@ -32,15 +39,40 @@ export class ProductService {
     return of(this.mockCatalog)
   }*/
 
-  
-  getCatalog(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url)
+  getNumOfProducts() {
+    return this.http.get<number>(this.url+"/totProducts")
+    .pipe(
+      tap(_ => console.log('totProducts has been loaded')),
+      catchError(this.handleError<number>('getNumOfProducts'))
+    );
+  }
+
+  getNumOfProductsFiltered(min: number, max: number) {
+    return this.http.get<number>(this.url+"/totProductsFiltered?min="+min+"&max="+max)
+    .pipe(
+      tap(_ => console.log('totProductsFiltered has been loaded')),
+      catchError(this.handleError<number>('getNumOfProductsFiltered'))
+    );
+  }
+
+
+  getCatalog(page: number, rows: number): Observable<Product[]> {
+    return this.http.get<Product[]>(this.url+"?page="+page+"&numElements="+rows)
       .pipe(
         tap(_ => console.log('catalog has been loaded')),
         catchError(this.handleError<Product[]>('getCatalog', []))
       );
   }
-  
+
+
+    getFilteredCatalog(f: Filter, page: number, rows: number): Observable<Product[]> {
+      return this.http.post<Product[]>(this.url+"/search?page="+page+"&numElements="+rows, f, this.httpOptions)
+      .pipe(
+        tap(_ => console.log('filtered catalog has been loaded')),
+        catchError(this.handleError<Product[]>('getFilteredCatalog', []))
+      );
+  }
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -49,4 +81,6 @@ export class ProductService {
       return of(result as T);
     };
   }
+
+
 }

@@ -17,4 +17,6 @@ public interface CatalogRepository extends JpaRepository<Product, Integer> {
 
     Page<Product> findByPriceBetweenOrderByPriceAsc(Double minPrice, Double maxPrice, Pageable pageable);
 
+    Long countByPriceBetween(Double minPrice, Double maxPrice);
+
 }

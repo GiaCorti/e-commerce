@@ -28,6 +28,10 @@ import {TableModule} from 'primeng/table';
 import {HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {SliderModule} from 'primeng/slider';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {PaginatorModule} from 'primeng/paginator';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +63,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     HttpClientModule,
     TableModule,
     CalendarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SliderModule,
+    SelectButtonModule,
+    PaginatorModule
   ],
   providers: [
     {

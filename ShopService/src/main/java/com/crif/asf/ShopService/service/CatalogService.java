@@ -63,4 +63,12 @@ public class CatalogService {
 		    PageRequest.of(page, numElements)).getContent();
     }
 
+    public Long getNumberOfProducts() {
+	return catalogRepository.count();
+    }
+
+    public Long getNumberOfProductsFiltered(Double minPrice, Double maxPrice) {
+	return catalogRepository.countByPriceBetween(minPrice, maxPrice);
+    }
+
 }
