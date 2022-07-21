@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth/")
@@ -20,13 +16,19 @@ public class AuthController {
     private AuthService authService;
 
     @GetMapping("login")
-
-    public String add(){
+    public String login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getPrincipal().toString();
        return this.authService.getToken(username);
     }
 
+    @GetMapping("isAdmin")
+    public boolean isAdmin(@RequestParam String token){ return this.authService.isAdmin(token);}
+
+    @GetMapping("getUser")
+    public String getUserFromToken(@RequestParam String token) {
+        return this.authService.getUserFromToken(token);
+    }
 
 }
 
