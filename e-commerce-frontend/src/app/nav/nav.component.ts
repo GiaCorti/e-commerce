@@ -10,11 +10,12 @@ import { AuthService } from '../services/auth.service';
 export class NavComponent implements OnInit {
   items: MenuItem[] = [];
   isAdmin = false;
-  isLogged = false;
+  isLogged:boolean | undefined;
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.isLogged = this.authService.hasValidAccessToken();
+    this.authService.isLogged.subscribe(res => this.isLogged = res);
+    //this.isLogged = this.authService.hasValidAccessToken();
     this.authService.isAdmin().subscribe(res => {this.isAdmin = res;
      
     if(this.isAdmin){

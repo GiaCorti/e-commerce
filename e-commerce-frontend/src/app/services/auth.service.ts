@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,8 @@ export class AuthService {
 
   url = "http://localhost:14000/auth/"
 
+  public  isLogged= new Subject<boolean>(); 
+
   isAdmin(): Observable<boolean>{
     if(this.hasValidAccessToken()){
       const token = sessionStorage.getItem('token');
@@ -45,6 +47,7 @@ export class AuthService {
       catchError(this.handleError<any>('login', ))
     ).subscribe(res => {
       sessionStorage.setItem('token', res);
+      this.isLogged.next(true);
     //console.log(sessionStorage.getItem( 'token' ));
     return of("")
   })
