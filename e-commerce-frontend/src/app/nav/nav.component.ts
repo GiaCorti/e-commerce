@@ -11,43 +11,53 @@ export class NavComponent implements OnInit {
   items: MenuItem[] = [];
   isAdmin = false;
   isLogged:boolean | undefined;
+  userid: string = "oo";
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.isLogged.subscribe(res => this.isLogged = res);
+    
+    this.authService.isLogged.subscribe(res => {this.isLogged = res
+      this.authService.getUser().subscribe(re => {
+        this.userid= re;
+       })
+       this.authService.isAdmin().subscribe(r => {
+        console.log(r);
+        this.isAdmin = r;
+        this.setItem();})});
     //this.isLogged = this.authService.hasValidAccessToken();
-    this.authService.isAdmin().subscribe(res => {this.isAdmin = res;
-     
-    if(this.isAdmin){
-    this.items = [
-      {
-        icon: 'pi pi-user',
-          items: [
-              {label: 'Detail', url:'account/detail/dada', icon:'pi pi-id-card'},
-              {label: 'Modify', url:'account/modify/dada',  icon:'pi pi-user-edit'},
-              {label: 'Accounts',  icon:'pi pi-users'},
-              {label: 'Logout',  icon:'pi pi-sign-out', command: () => this.logOut()}
-          ]
+    
   }
-    ]}
-    else{
 
+  setItem(){
+    console.log("userid: ",this.userid)
+    console.log("admin: ",this.isAdmin)
+    if(this.isAdmin){
       this.items = [
         {
           icon: 'pi pi-user',
             items: [
-                {label: 'Detail', url:'account/detail/dada', icon:'pi pi-id-card'},
-                {label: 'Modify', url:'account/modify/dada',  icon:'pi pi-user-edit'},
-                {label: 'Logout',  icon:'pi pi-sign-out',  command: () => this.logOut()}
+                {label: 'Detail', routerLink:['/account/detail/'+this.userid], icon:'pi pi-id-card'},
+                {label: 'Modify', routerLink:['/account/modify/'+this.userid],  icon:'pi pi-user-edit'},
+                {label: 'Accounts',routerLink:['/account/list'] , icon:'pi pi-users'},
+                {label: 'Logout',  icon:'pi pi-sign-out', command: () => this.logOut()}
             ]
     }
-      ]
-
-    }})
+      ]}
+      else{
   
-  }
-
+        this.items = [
+          {
+            icon: 'pi pi-user',
+              items: [
+                  {label: 'Detail', routerLink:['/account/detail/'+this.userid], icon:'pi pi-id-card'},
+                  {label: 'Modify', routerLink:['/account/modify/'+this.userid],  icon:'pi pi-user-edit'},
+                  {label: 'Logout',  icon:'pi pi-sign-out',  command: () => this.logOut()}
+              ]
+      }
+        ]
   
+      }}
+    
 
   logOut(){
     this.authService.logout();

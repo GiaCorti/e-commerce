@@ -40,6 +40,16 @@ export class AuthService {
     return of(false);
   }
 
+  getUser(): Observable<string>{
+    if(this.hasValidAccessToken()){
+      const token = sessionStorage.getItem('token');
+      return this.http.get(`${this.url}getUser?token=${token}`,{responseType: "text"}).pipe(
+        catchError(this.handleError<any>('getUser', ))
+      )
+    }
+    return of("");
+  }
+
   login(userinfo : string): Observable<any>{
     this.http.get(`${this.url}login`,{headers: new HttpHeaders({
       'Authorization': `Basic ${userinfo}`

@@ -38,6 +38,7 @@ public class FormLoginWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/login").authenticated()
                 .antMatchers("/auth/isAdmin").permitAll()
+                .antMatchers("/auth/getUser").permitAll()
                 .and()
                 .authenticationProvider(basicAuthorizationProvider);
     }
