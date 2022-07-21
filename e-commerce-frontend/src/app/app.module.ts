@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {SliderModule} from 'primeng/slider';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {PaginatorModule} from 'primeng/paginator';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import {PaginatorModule} from 'primeng/paginator';
     SliderModule,
     SelectButtonModule,
     PaginatorModule,
-    MenubarModule
+    MenubarModule,
+    InputTextareaModule
   ],
   providers: [
     {

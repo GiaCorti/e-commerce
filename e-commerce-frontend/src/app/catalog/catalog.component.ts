@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Filter } from '../models/filter';
 import { Product } from '../models/product';
@@ -19,12 +20,17 @@ export class CatalogComponent implements OnInit {
   page: number = 0;
   rows: number = 5;
   totProducts: number = 0;
+  isAdmin = false;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private authService: AuthService) {
     this.stateOptions = [{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }];
   }
 
   ngOnInit(): void {
+    this.authService.isAdmin().subscribe(r => {
+      console.log(r);
+      this.isAdmin = r;
+    });
     this.getNumOfProducts();
     this.getCatalog();
   }

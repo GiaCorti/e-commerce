@@ -1,1 +1,29 @@
-<p>product-modify works!</p>
+<div class = "center" *ngIf="product">
+<h3>Product with id {{product.id}}</h3>
+    <div class="grid p-fluid" [style]="{'width':'25%'}">
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">Name</span>
+                <input type="text" pInputText placeholder="Name" [(ngModel)]="product.name">
+            </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">Price</span>
+                <input type="text" pInputText placeholder="Price" [(ngModel)]="product.price">
+                <span class="p-inputgroup-addon">$</span>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">Description</span>
+                <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true"
+                    [(ngModel)]="product.description"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <p-button (click)="modifyProduct()"[style]="{'margin-top':'15px'}" label="Submit" icon="pi pi-check" iconPos="right"></p-button>
+</div>

@@ -1,48 +1,53 @@
-<p-table [style]="{'width':'100%'}" [value]="catalog" responsiveLayout="scroll">
-    <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-            Products
-            <div class="slider-container">
-                <h5>Price range: {{rangeValues[0]  + ' - ' + rangeValues[1]}}</h5>
-                <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000" [step]="1" 
-                ></p-slider>
-                <p-selectButton 
-                [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"
-                [style]="{'margin-top':'15px'}">
-                </p-selectButton>
-                <button 
-                pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success" 
-                [style]="{'margin-top':'15px'}"
-                (click)="getFilteredCatalog()"
-                ></button>
-        </div>
-        </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Price</th>
-            <th>Description</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-product>
-        <tr>
-            <td>
-                <a class = "detail" routerLink="product/detail/{{product.id}}">{{product.id}}</a>
-            </td>
-            <td>{{product.name}}</td>
-            <td><img [src]="'assets/images/' + product.id + format" width="100" class="shadow-4" /></td>
-            <td>{{product.price | currency:'USD'}}</td>
-            <td>{{product.description}}</td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-        <div class="flex align-items-center justify-content-between">
-            In total there {{totProducts != 1 ? "are" : "is"}} {{totProducts}} 
-            {{totProducts != 1? "products.": "product."}}
-        </div>
-    </ng-template>
-</p-table>
-<p-paginator [rows]=rows [totalRecords]=totProducts [rowsPerPageOptions]="[5,10,20,30]" (onPageChange)="paginate($event)"></p-paginator>
+<div class="center">
+    <p-table [style]="{'width':'85%'}" [value]="catalog" responsiveLayout="scroll">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Products
+                <div class="slider-container">
+                    <h5>Price range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h5>
+                    <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000" [step]="1"></p-slider>
+                    <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"
+                        [style]="{'margin-top':'15px'}">
+                    </p-selectButton>
+                    <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"
+                        [style]="{'margin-top':'15px'}" (click)="getFilteredCatalog()"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th *ngIf="isAdmin">Manage</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <a class="detail" routerLink="/product/detail/{{product.id}}">{{product.id}}</a>
+                </td>
+                <td>{{product.name}}</td>
+                <td><img [src]="'assets/images/' + product.id + format" width="100" class="shadow-4" /></td>
+                <td>{{product.price | currency:'USD'}}</td>
+                <td>{{product.description}}</td>
+                <td *ngIf="isAdmin">
+                    <button pButton pRipple type="button" class="p-button-rounded p-button-warning"
+                        routerLink="/product/modify/{{product.id}}">
+                        Modify
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there {{totProducts != 1 ? "are" : "is"}} {{totProducts}}
+                {{totProducts != 1? "products.": "product."}}
+            </div>
+        </ng-template>
+    </p-table>
+    <p-paginator [rows]=rows [totalRecords]=totProducts [rowsPerPageOptions]="[5,10,20,30]"
+        (onPageChange)="paginate($event)"></p-paginator>
+</div>

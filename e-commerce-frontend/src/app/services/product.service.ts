@@ -9,8 +9,6 @@ import { Product } from '../models/product';
 })
 export class ProductService {
 
-
-
   private url = 'http://localhost:14001/products';
 
   httpOptions = {
@@ -64,6 +62,13 @@ export class ProductService {
       );
   }
 
+  getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(this.url+"/"+id)
+      .pipe(
+        tap(_ => console.log('product has been loaded')),
+        catchError(this.handleError<Product>('getProduct'))
+      );
+  }
 
     getFilteredCatalog(f: Filter, page: number, rows: number): Observable<Product[]> {
       return this.http.post<Product[]>(this.url+"/search?page="+page+"&numElements="+rows, f, this.httpOptions)
@@ -73,6 +78,13 @@ export class ProductService {
       );
   }
 
+  modifyProduct(id: string, p: Product): Observable<Product> {
+    return this.http.put<Product>(this.url+"/"+id, p, this.httpOptions)
+      .pipe(
+        tap(_ => console.log('product has been modified')),
+        catchError(this.handleError<Product>('modifyProduct'))
+      );
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
