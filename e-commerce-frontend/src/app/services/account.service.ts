@@ -49,6 +49,13 @@ export class AccountService {
     
   }
 
+  changeRole(newrole: string, idAccount: string): Observable<any> {
+    return this.http.patch(`${this.url}?role=${newrole}&id_user=${idAccount}`,this.httpOptions).pipe(
+      catchError(this.handleError<any>('addBalance', ))
+    );
+  }
+ 
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

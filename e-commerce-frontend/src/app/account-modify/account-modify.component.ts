@@ -4,6 +4,7 @@ import { Account } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-account-modify',
@@ -15,10 +16,17 @@ export class AccountModifyComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private accountService: AccountService,
     private formBuilder: FormBuilder,
-    private location: Location) { }
-
-  ngOnInit(): void {
-    this.getDetail();
+    private location: Location,
+    private authService: AuthService) { }
+    isAdmin = false;
+    roles = ["ADMIN","USER"]
+  
+    ngOnInit(): void {
+    this.authService.isAdmin().subscribe(r => {
+      this.isAdmin = r;
+      this.getDetail();
+      })
+    
   }
 
   account !: Account
@@ -34,6 +42,10 @@ export class AccountModifyComponent implements OnInit {
   balForm = this.formBuilder.group({
     balance:[0,Validators.required]
   });
+
+  roleForm = this.formBuilder.group({
+    role: ['',Validators.required]
+  })
 
   getDetail() {
     let idAccount = this.route.snapshot.paramMap.get('id_account') || '';
@@ -51,6 +63,9 @@ export class AccountModifyComponent implements OnInit {
         lastName: account.lastName,
         birthday: account.birthday
       });
+    this.roleForm.patchValue({
+      role: account.role
+    })
    
   }
 
@@ -63,12 +78,26 @@ export class AccountModifyComponent implements OnInit {
     console.log(newaccount)
     let newbalance = this.balForm.value.balance || 0;
     if(newbalance > 0){
-      console.log("balance",newbalance)
-      this.accountService.addBalance(newbalance,idAccount).subscribe(()=>this.accountService.editAccount(newaccount,idAccount).subscribe(() => this.location.back()));
+      this.accountService.addBalance(newbalance,idAccount).subscribe(()=>this.accountService.editAccount(newaccount,idAccount).subscribe(() => {this.checkChangeRole();}));
 
     }
-    else{this.accountService.editAccount(newaccount,idAccount).subscribe(() => this.location.back());}
+    else{this.accountService.editAccount(newaccount,idAccount).subscribe(() => {
+      this.checkChangeRole();
+      });}
    
+  }
+  checkChangeRole() {
+    let newrole = this.roleForm.value.role || '';
+    console.log(newrole);
+
+    if(newrole !== this.account.role){
+      let idAccount = this.route.snapshot.paramMap.get('id_account') || '';
+      console.log("PAtch role")
+      this.accountService.changeRole(newrole,idAccount).subscribe(()=>this.location.back());
+    }
+    else{
+      this.location.back()
+    }
   }
 
 }

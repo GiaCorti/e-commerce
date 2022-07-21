@@ -47,6 +47,18 @@
             <br>
           </form>
 
+          <br>
+          <form *ngIf="this.isAdmin" class="form" [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+
+            <div class="p-float-label">
+              <p-dropdown id="role" [options]="roles" formControlName="role"></p-dropdown>
+              <label for="role" >Role</label>
+              
+            
+            </div>
+            <br>
+          </form>
+
           
           
           <br>
