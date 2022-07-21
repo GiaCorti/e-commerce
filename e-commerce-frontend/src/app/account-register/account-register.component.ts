@@ -27,6 +27,8 @@ export class AccountRegisterComponent implements OnInit {
     birthday: ['',Validators.required]
   });
 
+  
+
   onSubmit():void {
     let account = this.registerForm.value;
     let d =new Date(Date.parse(account.birthday!));

@@ -34,11 +34,27 @@
             <input pInputText id="birthday" type="date" formControlName="birthday">
             <label for="birthday" icon="pi pi-at">Birthday</label>
           </div>
+
+          <br>
+          <form class="form" [formGroup]="balForm" (ngSubmit)="onSubmit()">
+
+            <div class="p-float-label">
+              <input pInputText  id="balance" type="number" formControlName="balance">
+              <label for="balance" >ADD Balance ( current= {{account.balance |currency}})</label>
+              
+            
+            </div>
+            <br>
+          </form>
+
+          
           
           <br>
           <p-button type="submit" label="Save" [disabled]='!editForm.valid' class="p-button-success"></p-button>
         
       
       </form>
+
+     
     
     </body>

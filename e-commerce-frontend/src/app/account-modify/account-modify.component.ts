@@ -31,6 +31,10 @@ export class AccountModifyComponent implements OnInit {
     birthday: ['',Validators.required],
   });
 
+  balForm = this.formBuilder.group({
+    balance:[0,Validators.required]
+  });
+
   getDetail() {
     let idAccount = this.route.snapshot.paramMap.get('id_account') || '';
     
@@ -57,8 +61,14 @@ export class AccountModifyComponent implements OnInit {
     let newaccount = this.editForm.value;
     let idAccount = this.route.snapshot.paramMap.get('id_account') || '';
     console.log(newaccount)
+    let newbalance = this.balForm.value.balance || 0;
+    if(newbalance > 0){
+      console.log("balance",newbalance)
+      this.accountService.addBalance(newbalance,idAccount).subscribe(()=>this.accountService.editAccount(newaccount,idAccount).subscribe(() => this.location.back()));
 
-   this.accountService.editAccount(newaccount,idAccount).subscribe(() => this.location.back());
+    }
+    else{this.accountService.editAccount(newaccount,idAccount).subscribe(() => this.location.back());}
+   
   }
 
 }

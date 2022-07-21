@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AccountService {
+ 
   
   
  
@@ -39,6 +40,13 @@ export class AccountService {
     return this.http.get<Account>(`${this.url}${idAccount}`,this.httpOptions).pipe(
       catchError(this.handleError<any>('insertAccount', ))
     );
+  }
+
+  addBalance(balance: number, idAccount: string): Observable<any> {
+    return this.http.patch(`${this.url}${idAccount}?balance=${balance}`,this.httpOptions).pipe(
+      catchError(this.handleError<any>('addBalance', ))
+    );
+    
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
