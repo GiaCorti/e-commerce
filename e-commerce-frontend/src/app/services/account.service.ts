@@ -3,11 +3,13 @@ import { Observable, of } from 'rxjs';
 import { Account} from '../models/account';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { AccountListDTO } from '../models/accountListDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+  
  
   
   
@@ -52,6 +54,12 @@ export class AccountService {
   changeRole(newrole: string, idAccount: string): Observable<any> {
     return this.http.patch(`${this.url}?role=${newrole}&id_user=${idAccount}`,this.httpOptions).pipe(
       catchError(this.handleError<any>('addBalance', ))
+    );
+  }
+
+  getAllAccounts(): Observable<AccountListDTO[]> {
+    return this.http.get<AccountListDTO[]>(`${this.url}`).pipe(
+      catchError(this.handleError<any>('insertAccount', ))
     );
   }
  

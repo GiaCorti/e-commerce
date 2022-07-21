@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountListDTO } from '../models/accountListDTO';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-accounts-list',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
+
+  accounts !: AccountListDTO []
 
   ngOnInit(): void {
+    this.getList();
+  }
+  getList() {
+    
+    this.accountService.getAllAccounts().subscribe(res => {this.accounts= res
+    console.log(res)});
+    
   }
 
 }
