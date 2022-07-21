@@ -29,6 +29,16 @@ export class AuthService {
 
   url = "http://localhost:14000/auth/"
 
+  isAdmin(): Observable<boolean>{
+    if(this.hasValidAccessToken()){
+      const token = sessionStorage.getItem('token');
+      return this.http.get<boolean>(`${this.url}isAdmin?token=${token}`).pipe(
+        catchError(this.handleError<any>('isAdmin', ))
+      )
+    }
+    return of(false);
+  }
+
   login(userinfo : string): Observable<any>{
     this.http.get(`${this.url}login`,{headers: new HttpHeaders({
       'Authorization': `Basic ${userinfo}`
@@ -36,14 +46,11 @@ export class AuthService {
       catchError(this.handleError<any>('login', ))
     ).subscribe(res => {
       sessionStorage.setItem('token', res);
-    console.log(sessionStorage.getItem( 'token' ));
+    //console.log(sessionStorage.getItem( 'token' ));
     return of("")
   })
   return of("")
   }
-
-
-
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

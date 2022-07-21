@@ -32,7 +32,7 @@ export class AccountRegisterComponent implements OnInit {
     let d =new Date(Date.parse(account.birthday!));
     let date = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
     account.birthday = date;
-    console.log(account)
+    //console.log(account)
 
 
     

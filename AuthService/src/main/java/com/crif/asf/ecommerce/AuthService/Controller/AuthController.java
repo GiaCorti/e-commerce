@@ -25,6 +25,10 @@ public class AuthController {
     @GetMapping("isAdmin")
     public boolean isAdmin(@RequestParam String token){ return this.authService.isAdmin(token);}
 
+    @GetMapping("getUser")
+    public String getUserFromToken(@RequestParam String token) {
+        return this.authService.getUserFromToken(token);
+    }
 
 }
 

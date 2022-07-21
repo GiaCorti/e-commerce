@@ -20,7 +20,7 @@ export class AccountService {
   }
 
   insertAccount(account: any): Observable<any>{
-    console.log(account);
+    //console.log(account);
     return this.http.post(`${this.url}register/`,account,this.httpOptions).pipe(
       catchError(this.handleError<any>('insertAccount', ))
     );

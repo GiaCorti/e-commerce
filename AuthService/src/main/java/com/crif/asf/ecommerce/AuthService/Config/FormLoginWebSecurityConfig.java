@@ -30,13 +30,14 @@ public class FormLoginWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/auth/**").httpBasic()
+                .antMatcher("/auth/login").httpBasic()
                 .and()
                 .csrf().disable()
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/**").authenticated()
+                .antMatchers("/auth/login").authenticated()
+                .antMatchers("/auth/isAdmin").permitAll()
                 .and()
                 .authenticationProvider(basicAuthorizationProvider);
     }

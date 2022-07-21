@@ -25,6 +25,7 @@ import { AccountsListComponent } from './accounts-list/accounts-list.component';
 import { CommentsListComponent } from './comments-list/comments-list.component';
 import { CommentAddComponent } from './comment-add/comment-add.component';
 import {TableModule} from 'primeng/table';
+import {MenubarModule} from 'primeng/menubar';
 import {HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -59,7 +60,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     HttpClientModule,
     TableModule,
     CalendarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MenubarModule
   ],
   providers: [
     {
