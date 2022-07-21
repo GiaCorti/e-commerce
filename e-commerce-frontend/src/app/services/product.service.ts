@@ -8,7 +8,7 @@ import { Product } from '../models/product';
 })
 export class ProductService {
 
-  private url = 'http://localhost:14001/products?page=0&numElements=3';
+  private url = 'http://localhost:14001/products?page=0&numElements=15';
 
   mockCatalog: Product[] = [
     {
