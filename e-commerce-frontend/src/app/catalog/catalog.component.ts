@@ -32,15 +32,15 @@ export class CatalogComponent implements OnInit {
       this.isAdmin = r;
     });
     this.getNumOfProducts();
-    this.getCatalog();
+    this.getFilteredCatalog(0, 1000000);
   }
 
   getNumOfProducts(): void {
     this.productService.getNumOfProducts().subscribe(tot => this.totProducts = tot);
   }
 
-  getNumOfProductsFiltered(): void {
-    this.productService.getNumOfProductsFiltered(this.rangeValues[0], this.rangeValues[1])
+  getNumOfProductsFiltered(min: number, max: number): void {
+    this.productService.getNumOfProductsFiltered(min, max)
       .subscribe(tot => this.totProducts = tot);
   }
 
@@ -49,13 +49,13 @@ export class CatalogComponent implements OnInit {
     this.productService.getCatalog(this.page, this.rows).subscribe(catalog => this.catalog = catalog);
   }
 
-  getFilteredCatalog(): void {
+  getFilteredCatalog(min: number, max: number): void {
     const f: Filter = {
-      minPrice: this.rangeValues[0],
-      maxPrice: this.rangeValues[1],
+      minPrice: min,
+      maxPrice: max,
       order: this.value
     }
-    this.getNumOfProductsFiltered();
+    this.getNumOfProductsFiltered(min, max);
     this.productService.getFilteredCatalog(f, this.page, this.rows).subscribe(catalog => {
       this.catalog = catalog;
     });
@@ -64,7 +64,7 @@ export class CatalogComponent implements OnInit {
   paginate(event: any) {
     this.rows = event.rows;
     this.page = event.page;
-    this.getFilteredCatalog();
+    this.getFilteredCatalog(this.rangeValues[0], this.rangeValues[1]);
   }
 
 }
