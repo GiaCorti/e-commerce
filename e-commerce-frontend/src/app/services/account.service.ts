@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AccountService {
   
+  
  
   constructor(private http:HttpClient) { }
 
@@ -26,6 +27,12 @@ export class AccountService {
       catchError(this.handleError<any>('insertAccount', ))
     );
     
+  }
+
+  editAccount(account: any, idAccount: string): Observable<any> {
+    return this.http.put(`${this.url}${idAccount}`,account,this.httpOptions).pipe(
+      catchError(this.handleError<any>('editAccount', ))
+    );
   }
 
   getDetail(idAccount: string): Observable<Account> {
