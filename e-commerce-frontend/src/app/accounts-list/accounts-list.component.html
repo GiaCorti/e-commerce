@@ -29,7 +29,8 @@
                 <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning"[style]="{'margin-left':'15px'}" routerLink="/account/modify/{{accountListDTO._id}}">
                 </button>
 
-                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"[style]="{'margin-left':'15px'}" routerLink="/account/modify/{{accountListDTO._id}}">
+                
+                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"[style]="{'margin-left':'15px'}" (click)="confirmDelete(accountListDTO._id)">
                 </button>
             </td>
                 
@@ -38,4 +39,6 @@
         <ng-template pTemplate="summary">
         </ng-template>
     </p-table>
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">
+    </p-confirmDialog>
 </div>

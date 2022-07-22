@@ -9,11 +9,7 @@ import { AccountListDTO } from '../models/accountListDTO';
   providedIn: 'root'
 })
 export class AccountService {
-  
- 
-  
-  
- 
+   
   constructor(private http:HttpClient) { }
 
   url = "http://localhost:14002/account/"
@@ -59,6 +55,12 @@ export class AccountService {
 
   getAllAccounts(): Observable<AccountListDTO[]> {
     return this.http.get<AccountListDTO[]>(`${this.url}`).pipe(
+      catchError(this.handleError<any>('insertAccount', ))
+    );
+  }
+
+  delete(idAccount: string): Observable<any>{
+    return this.http.delete(`${this.url}${idAccount}`).pipe(
       catchError(this.handleError<any>('insertAccount', ))
     );
   }
