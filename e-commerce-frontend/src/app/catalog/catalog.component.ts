@@ -1,4 +1,4 @@
-import { CartOrder } from './../models/cart';
+import { CartOrder } from '../models/cartOrder';
 import { CartService } from './../services/cart.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit, QueryList } from '@angular/core';
@@ -24,6 +24,7 @@ export class CatalogComponent implements OnInit {
   rows: number = 5;
   totProducts: number = 0;
   isAdmin = false;
+  initValue = 1;
 
   constructor(
     private productService: ProductService, 
@@ -73,11 +74,11 @@ export class CatalogComponent implements OnInit {
     this.getFilteredCatalog(this.rangeValues[0], this.rangeValues[1]);
   }
 
-  addToCart(id: number) {
-
+  addToCart(idInput: number, qtyInput:number) {
+    console.log(qtyInput)
     const cartOrder: CartOrder = {
-        idProduct: id,
-        qty: 1
+        idProduct: idInput,
+        qty: qtyInput
     }
 
     this.cartService.addItemToCart(cartOrder).subscribe(_ => window.alert("product added to your cart"));

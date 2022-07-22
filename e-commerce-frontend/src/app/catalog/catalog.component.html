@@ -24,9 +24,10 @@
                 <th>Image</th>
                 <th>Price</th>
                 <th>Description</th>
-                <th id="Detail"></th>
-                <th id="Cart"></th>
-                <th id="Modify" *ngIf="isAdmin"></th>
+                <th id="detail"></th>
+                <th id="cart"></th>
+                <th id="qty"></th>
+                <th id="modify" *ngIf="isAdmin"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
@@ -43,8 +44,15 @@
                 </td>
                 <td>
                     <button pButton pRipple type="button" [style]="{'margin-left':'-15px'}" icon = "pi pi-shopping-cart" class="p-button-rounded p-button-success" 
-                    (onClick)="addToCart(product.id)">
+                    (click)="addToCart(product.id, qty.value)">
                     </button>
+                </td>
+                <td>
+                    <p-inputNumber #qty
+                    [min] = 1 [size] = 1 [step] = 1 
+                    [ngModel]="initValue" 
+                    [showButtons]="true" inputId="qty_{{product.id}}">
+                    </p-inputNumber>
                 </td>
                 <td *ngIf="isAdmin">
                     <button pButton pRipple type="button" [style]="{'margin-left':'-15px'}" icon = "pi pi-pencil" class="p-button-rounded p-button-warning"

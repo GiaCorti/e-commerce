@@ -1,7 +1,8 @@
-import { CartOrder } from './../models/cart';
+import { CartOrder } from '../models/cartOrder';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap, catchError, Observable, of } from 'rxjs';
+import { Cart } from '../models/cart';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,14 @@ export class CartService {
       .pipe(
         tap(_ => console.log('product has been added to your cart')),
         catchError(this.handleError<CartOrder>('addProduct'))
+      );
+  }
+
+  getCart(): Observable<Cart[]> {
+    return this.http.get<Cart[]>(this.url)
+      .pipe(
+        tap(_ => console.log('cart has been loaded')),
+        catchError(this.handleError<Cart[]>('getCart', []))
       );
   }
 

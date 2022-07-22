@@ -34,6 +34,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import {PaginatorModule} from 'primeng/paginator';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {DropdownModule} from 'primeng/dropdown';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import {DropdownModule} from 'primeng/dropdown';
     PaginatorModule,
     MenubarModule,
     InputTextareaModule,
-    DropdownModule
+    DropdownModule,
+    InputNumberModule
   ],
   providers: [
     {
