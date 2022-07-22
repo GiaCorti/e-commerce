@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { Location } from '@angular/common';
 import { AccountService } from '../services/account.service';
 import { ConfirmationService} from 'primeng/api';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-nav',
@@ -21,39 +22,29 @@ export class NavComponent implements OnInit {
     private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.items = [
-      {
-        label: "Home",
-        icon: 'pi pi-home',
-        routerLink:['home']
-
-      },
-    {
-      label: "Catalog",
-      icon:'pi pi-shopping-bag',
-      routerLink:['product/catalog']
-
-    },
-    {
-      label: "login",
-      icon:'pi pi-sign-in',
-      routerLink:['login']
-
-    }]
+    if(this.authService.hasValidAccessToken()){
+        this.setItem();
+    }
+    else{
+        this.setItemNotLogged();
+    }
     
+
     this.authService.isLogged.subscribe(res => {this.isLogged = res
-      this.authService.getUser().subscribe(re => {
-        this.userid= re;
+      this.authService.getUser().subscribe(r => {
+        this.userid= r;
+        this.setItem();
        })
-       this.authService.isAdmin().subscribe(r => {
-        console.log(r);
-        this.isAdmin = r;
-        this.setItem();})});
+  })
     //this.isLogged = this.authService.hasValidAccessToken();
     
   }
 
   setItem(){
+    this.authService.isAdmin().subscribe(r => {
+      console.log(r);
+      this.isAdmin = r;
+      
     console.log("userid: ",this.userid)
     console.log("admin: ",this.isAdmin)
     if(this.isAdmin){
@@ -116,7 +107,29 @@ export class NavComponent implements OnInit {
       }
         ]
   
-      }}
+      }})}
+
+  setItemNotLogged(){
+    this.items = [
+      {
+        label: "Home",
+        icon: 'pi pi-home',
+        routerLink:['home']
+
+      },
+    {
+      label: "Catalog",
+      icon:'pi pi-shopping-bag',
+      routerLink:['product/catalog']
+
+    },
+    {
+      label: "login",
+      icon:'pi pi-sign-in',
+      routerLink:['login']
+
+    }]
+  }
   delete(userid: string): void {
     this.accountService.delete(userid).subscribe(()=>this.logOut());
     
