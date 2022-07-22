@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   total = 0
   constructor(
     private cartService: CartService,
-    private confirmationService: ConfirmationService, 
+    private confirmationService: ConfirmationService,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -27,37 +27,46 @@ export class CartComponent implements OnInit {
   getCart(): void {
 
     this.cartService.getCart().subscribe(c => {
-      this.cartList=c; 
-      this.totItems= c.length;
+      this.cartList = c;
+      this.totItems = c.length;
       this.total = c.reduce((accumulator, cart) => {
-        return accumulator + cart.product.price*cart.qty;
+        return accumulator + cart.product.price * cart.qty;
       }, 0);
     });
   }
 
-  removeFromCart(id: string): void{
+  removeFromCart(id: string): void {
     this.cartService.removeFromCart(id).subscribe(_ => this.ngOnInit());
   }
 
   confirm(): void {
-    this.confirmationService.confirm({
+    if (this.cartList.length == 0)
+      this.showWarning();
+    else {
+      this.confirmationService.confirm({
         message: 'Are you sure that you want to proceed with the purchase?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.messageService.add({severity:'info', summary:'Confirmed', detail:'Confirmed purchase'});
-            this.cartService.buy().subscribe(o => this.ngOnInit())
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Confirmed purchase' });
+          this.cartService.buy().subscribe(o => this.ngOnInit())
         },
         reject: (type: any) => {
-            switch(type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected the purchase'});
-                break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled the purchase'});
-                break;
-            }
+          switch (type) {
+            case ConfirmEventType.REJECT:
+              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected the purchase' });
+              break;
+            case ConfirmEventType.CANCEL:
+              this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled the purchase' });
+              break;
+          }
         }
-    });
-}
+      });
+    }
+  }
+
+  showWarning() {
+    this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Warn', detail: 'Your cart is empty!' });
+  }
+
 }
