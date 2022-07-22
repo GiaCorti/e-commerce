@@ -20,26 +20,36 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Image</th>
                 <th>Price</th>
                 <th>Description</th>
-                <th *ngIf="isAdmin">Manage</th>
+                <th id="Detail"></th>
+                <th id="Cart"></th>
+                <th id="Modify" *ngIf="isAdmin"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
-                <td>
-                    <a class="detail" routerLink="/product/detail/{{product.id}}">{{product.id}}</a>
-                </td>
+  
                 <td>{{product.name}}</td>
                 <td><img [src]="'assets/images/' + product.id + format" width="100" class="shadow-4" /></td>
                 <td>{{product.price | currency:'USD'}}</td>
                 <td>{{product.description}}</td>
+                <td>
+                    <button pButton pRipple type="button" routerLink="/product/detail/{{product.id}}"
+                     class="p-button-rounded p-button-info">
+                        <i class="pi pi-info"></i>
+                    </button>
+                </td>
+                <td>
+                    <button pButton pRipple type="button" class="p-button-rounded p-button-success">
+                        <i class="pi pi-shopping-cart"></i>
+                    </button>
+                </td>
                 <td *ngIf="isAdmin">
-                    <button pButton pRipple type="button" label = "Modify" class="p-button-rounded p-button-warning"
-                        routerLink="/product/modify/{{product.id}}">
+                    <button pButton pRipple type="button" class="p-button-rounded p-button-warning"
+                        routerLink="/product/modify/{{product.id}}"><i class="pi pi-pencil"></i>
                     </button>
                 </td>
             </tr>
