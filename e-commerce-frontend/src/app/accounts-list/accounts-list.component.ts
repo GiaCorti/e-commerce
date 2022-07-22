@@ -12,7 +12,7 @@ export class AccountsListComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   accounts !: AccountListDTO []
-  totAccounts: number = 6;
+  totAccounts: number = 0;
   rows: number = 5;
 
   ngOnInit(): void {
