@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
+import { Comment, newComment } from '../models/comment';
 import { Filter } from '../models/filter';
 import { Product } from '../models/product';
 
@@ -8,6 +9,8 @@ import { Product } from '../models/product';
   providedIn: 'root'
 })
 export class ProductService {
+  
+  
 
   private url = 'http://localhost:14001/products';
 
@@ -92,6 +95,18 @@ export class ProductService {
         tap(_ => console.log('product has been added')),
         catchError(this.handleError<Product>('addProduct'))
       );
+  }
+
+  getComments(idProd: string): Observable<Comment[]> {
+    return this.http.get<Comment[]>(this.url+"/"+idProd+"/comments")
+    
+  }
+
+  addComment(idProd: string, comment : newComment): Observable<any> {
+    return this.http.post<newComment>(this.url+"/"+idProd+"/comments",comment,this.httpOptions).pipe(
+      tap(_ => console.log('comment has been added')),
+      catchError(this.handleError<any>('addComment'))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

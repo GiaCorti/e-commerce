@@ -39,6 +39,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
+import {FieldsetModule} from 'primeng/fieldset';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {MessageService} from 'primeng/api';
     DropdownModule,
     InputNumberModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    FieldsetModule
   ],
   providers: [
     {

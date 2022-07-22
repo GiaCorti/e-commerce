@@ -1,1 +1,8 @@
-<p>comment-add works!</p>
+<h4>Add a Review</h4>
+
+<textarea pInputTextarea [(ngModel)]="text"  ></textarea>
+
+<button pButton pRipple type="button" [style]="{'margin-left':'-15px'}" label = "Add review" icon = "pi pi-check" class="p-button-rounded p-button-success" 
+                    (click)="addReview()">
+                    </button>
+

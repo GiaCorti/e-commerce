@@ -1,1 +1,7 @@
-<p>comments-list works!</p>
+<h4>Reviews:</h4>
+
+
+<p-fieldset *ngFor="let comment of comments" [toggleable]="true" >
+    <ng-template pTemplate="header">{{comment.idUser}}  {{comment.commentDate | date}}</ng-template>
+    {{comment.text}}
+</p-fieldset>
