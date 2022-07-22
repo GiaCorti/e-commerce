@@ -1,1 +1,19 @@
-<p>receipt works!</p>
+<body *ngIf="orders">
+    <br>
+    <br>  
+    <table ptable class="styled-table">
+        <tr>
+            <td><b>Product name</b></td>
+            <td><b>Quantity</b></td>
+            <td><b>Price</b></td>
+        </tr>
+        <tr *ngFor="let o of orders">
+            <td>{{o.cart.product.name}}</td>
+            <td>{{o.cart.qty}}</td>
+            <td>{{o.cart.product.price | currency: 'USD'}}</td>
+        </tr>
+    </table>
+   
+    <h3>Total: {{total | currency: 'USD' }}</h3>
+    <h3>Purchase date: {{orders[0].orderDate | date: 'medium'}}</h3>
+    </body>

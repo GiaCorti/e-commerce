@@ -13,6 +13,8 @@ export class CartService {
 
   private url = 'http://localhost:14001/cart';
 
+  orders: Order[] = [];
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -45,12 +47,20 @@ export class CartService {
       );
   }
 
-  buy(): Observable<Order> {
+  buy(): Observable<Order[]> {
     return this.http.post<any>(this.url+"/buy", null)
       .pipe(
-        tap(_ => console.log('buy executed')),
+        tap(orders => 
+          {
+            console.log('buy executed');
+            this.orders = orders;
+          }),
         catchError(this.handleError<any>('buy'))
       );
+  }
+
+  getOrders(): Order[]{
+    return this.orders;
   }
 
 

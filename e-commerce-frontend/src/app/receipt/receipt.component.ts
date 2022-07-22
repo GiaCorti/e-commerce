@@ -1,4 +1,6 @@
+import { CartService } from './../services/cart.service';
 import { Component, OnInit } from '@angular/core';
+import { Order } from '../models/order';
 
 @Component({
   selector: 'app-receipt',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReceiptComponent implements OnInit {
 
-  constructor() { }
+  orders: Order[] = []
+  total = 0;
+
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
+    this.orders = this.cartService.getOrders();
+    this.total = this.orders.reduce((accumulator, order) => {
+      return accumulator + order.total;
+    }, 0);
   }
 
 }

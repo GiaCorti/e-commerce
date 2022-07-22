@@ -2,6 +2,7 @@ import { CartService } from './../services/cart.service';
 import { Component, createEnvironmentInjector, OnInit } from '@angular/core';
 import { Cart } from '../models/cart';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getCart();
@@ -49,7 +51,7 @@ export class CartComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Confirmed purchase' });
-          this.cartService.buy().subscribe(o => this.ngOnInit())
+          this.cartService.buy().subscribe(o => this.router.navigate(["/receipt"]))
         },
         reject: (type: any) => {
           switch (type) {
