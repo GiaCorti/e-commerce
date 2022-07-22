@@ -1,7 +1,7 @@
 <div class="center">
-    <p-table [style]="{'width':'85%'}" [value]="cartList" responsiveLayout="scroll"
-    [paginator]="true" [rows]=rows [showCurrentPageReport]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cart items" 
+    <p-table [style]="{'width':'85%'}" [value]="cartList" responsiveLayout="scroll" [paginator]="true" [rows]=rows
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} cart items"
         [rowsPerPageOptions]="[5,10,25,50]" [totalRecords]="totItems">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
@@ -17,29 +17,35 @@
                 <th>Quantity</th>
                 <th id="detail"></th>
                 <th id="removeFromCart"></th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-cart>
             <tr>
-  
+
                 <td>{{cart.product.name}}</td>
                 <td><img [src]="'assets/images/' + cart.product.id + format" width="100" class="shadow-4" /></td>
                 <td>{{cart.product.description}}</td>
                 <td>{{cart.product.price | currency:'USD'}}</td>
                 <td>{{cart.qty}}</td>
                 <td>
-                    <button pButton pRipple type="button" icon = "pi pi-info" routerLink="/product/detail/{{cart.product.id}}"
-                     class="p-button-rounded p-button-info">
+                    <button pButton pRipple type="button" icon="pi pi-info"
+                        routerLink="/product/detail/{{cart.product.id}}" class="p-button-rounded p-button-info">
                     </button>
                 </td>
                 <td>
-                    <button pButton pRipple type="button" [style]="{'margin-left':'-25px'}" 
-                    icon = "pi pi-shopping-cart" class="p-button-rounded p-button-success" 
-                    (click)="removeFromCart(cart.product.id)">
+                    <button (click)="removeFromCart(cart.product.id)" pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-danger" [style]="{'margin-left':'-25px'}">
                     </button>
                 </td>
             </tr>
         </ng-template>
     </p-table>
+
+
+    <h3>Total: {{total | currency: 'USD'}}</h3>
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">
+    </p-confirmDialog>
+    <p-button (click)="confirm()" icon="pi pi-check" label="Buy" styleClass="mr-2"></p-button>
+    <p-toast></p-toast>
 </div>

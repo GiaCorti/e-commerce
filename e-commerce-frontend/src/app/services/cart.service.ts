@@ -36,6 +36,15 @@ export class CartService {
       );
   }
 
+  removeFromCart(id: string): Observable<any> {
+    return this.http.delete<any>(this.url+"?id_product="+id)
+      .pipe(
+        tap(_ => console.log('product removed from cart')),
+        catchError(this.handleError<Cart[]>('removeFromCart'))
+      );
+  }
+
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); 
