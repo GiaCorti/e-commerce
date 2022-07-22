@@ -66,6 +66,11 @@ export class NavComponent implements OnInit {
         routerLink:['product/catalog']
   
       },
+      {
+        label: "Cart",
+        icon: 'pi pi-shopping-cart',
+        routerLink:['cart']
+      },
         {
           icon: 'pi pi-user',
             items: [
@@ -90,6 +95,11 @@ export class NavComponent implements OnInit {
           icon:'pi pi-shopping-bag',
           routerLink:['product/catalog']
     
+        },
+        {
+          label: "Cart",
+          icon: 'pi pi-shopping-cart',
+          routerLink:['cart']
         },
           {
             icon: 'pi pi-user',
