@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { CartOrder } from '../models/cartOrder';
 import { CartService } from './../services/cart.service';
 import { AuthService } from './../services/auth.service';
@@ -29,7 +30,8 @@ export class CatalogComponent implements OnInit {
   constructor(
     private productService: ProductService, 
     private authService: AuthService,
-    private cartService: CartService) {
+    private cartService: CartService,
+    private messageService: MessageService) {
     this.stateOptions = [{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }];
   }
 
@@ -81,6 +83,10 @@ export class CatalogComponent implements OnInit {
         qty: qtyInput
     }
 
-    this.cartService.addItemToCart(cartOrder).subscribe(_ => window.alert("product added to your cart"));
+    this.cartService.addItemToCart(cartOrder).subscribe(_ => this.showAddMessage());
   }
+
+  showAddMessage() {
+    this.messageService.add({key: 'bc', severity:'success', summary: 'Success', detail: 'Product added to your cart'});
+}
 }
