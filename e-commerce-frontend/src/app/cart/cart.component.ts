@@ -42,6 +42,7 @@ export class CartComponent implements OnInit {
   }
 
   confirm(): void {
+    console.log("called")
     if (this.cartList.length == 0)
       this.showWarning();
     else {
