@@ -86,7 +86,7 @@ export class ProductService {
       );
   }
 
-  addProduct(p: Product): Observable<Product> {
+  addProduct(p: Product): Observable<any> {
     return this.http.post<Product>(this.url, p, this.httpOptions)
       .pipe(
         tap(_ => console.log('product has been added')),

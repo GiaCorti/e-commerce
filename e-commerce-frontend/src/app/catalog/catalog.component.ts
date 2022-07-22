@@ -1,8 +1,11 @@
+import { CartOrder } from './../models/cart';
+import { CartService } from './../services/cart.service';
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList } from '@angular/core';
 import { Filter } from '../models/filter';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
@@ -22,7 +25,10 @@ export class CatalogComponent implements OnInit {
   totProducts: number = 0;
   isAdmin = false;
 
-  constructor(private productService: ProductService, private authService: AuthService) {
+  constructor(
+    private productService: ProductService, 
+    private authService: AuthService,
+    private cartService: CartService) {
     this.stateOptions = [{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }];
   }
 
@@ -67,4 +73,13 @@ export class CatalogComponent implements OnInit {
     this.getFilteredCatalog(this.rangeValues[0], this.rangeValues[1]);
   }
 
+  addToCart(id: number) {
+
+    const cartOrder: CartOrder = {
+        idProduct: id,
+        qty: 1
+    }
+
+    this.cartService.addItemToCart(cartOrder).subscribe(_ => window.alert("product added to your cart"));
+  }
 }
