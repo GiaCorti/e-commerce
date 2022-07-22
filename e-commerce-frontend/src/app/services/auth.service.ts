@@ -56,8 +56,9 @@ export class AuthService {
     }),responseType: "text"}).pipe(
       catchError(this.handleError<any>('login', ))
     ).subscribe(res => {
+      if(res !== undefined){
       sessionStorage.setItem('token', res);
-      this.isLogged.next(true);
+      this.isLogged.next(true);}
     //console.log(sessionStorage.getItem( 'token' ));
     return of("")
   })
