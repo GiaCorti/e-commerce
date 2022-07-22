@@ -12,15 +12,24 @@ export class AccountsListComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   accounts !: AccountListDTO []
+  totAccounts: number = 0;
+  page: number = 0;
+  rows: number = 5;
 
   ngOnInit(): void {
     this.getList();
   }
   getList() {
-    
     this.accountService.getAllAccounts().subscribe(res => {this.accounts= res
-    console.log(res)});
+    console.log(res)
+  this.totAccounts=this.accounts.length});
     
+  }
+
+  paginate(event: any) {
+    console.log(event.rows, event.page)
+    this.rows = event.rows;
+    this.page = event.page;
   }
 
 }

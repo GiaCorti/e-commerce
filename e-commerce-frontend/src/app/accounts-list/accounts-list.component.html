@@ -1,1 +1,45 @@
-<p>accounts-list works!</p>
+<div class="center">
+    <p-table [style]="{'width':'85%'}" [value]="accounts" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Balance</th>
+                <th></th>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-accountListDTO>
+            <tr>
+                
+                <td>{{accountListDTO.email}}</td>
+                <td>{{accountListDTO.firstName}}</td>
+                <td>{{accountListDTO.lastName}}</td>
+                <td>{{accountListDTO.role}}</td>
+                <td>{{accountListDTO.balance | currency:'USD'}}</td>
+                <td><button pButton pRipple type="button" icon="pi pi-id-card" class="p-button-rounded p-button-success"[style]="{'margin-left':'15px'}" routerLink="/account/detail/{{accountListDTO._id}}">
+                </button>
+
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning"[style]="{'margin-left':'15px'}" routerLink="/account/modify/{{accountListDTO._id}}">
+                </button>
+
+                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"[style]="{'margin-left':'15px'}" routerLink="/account/modify/{{accountListDTO._id}}">
+                </button>
+            </td>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there {{totAccounts != 1 ? "are" : "is"}} {{totAccounts}}
+                {{totAccounts != 1? "accounts.": "account."}}
+
+            </div>
+        </ng-template>
+    </p-table>
+    <p-paginator [rows]=rows [totalRecords]=7 [rowsPerPageOptions]="[5,10,20,30]"
+        (onPageChange)="paginate($event)"></p-paginator>
+</div>
