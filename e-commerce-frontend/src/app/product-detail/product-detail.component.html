@@ -1,3 +1,4 @@
+<div style="float:left;">
 <body *ngIf="product">
     <br>
     <br>  
@@ -11,16 +12,17 @@
             <td>{{product.name}}</td>
         </tr>
         <tr>
-            <td>Price:</td>
-            <td>{{product.price | currency: 'USD'}}</td>
-        </tr>
-        <tr>
             <td>Description:</td>
             <td>{{product.description}}</td>
         </tr>
-        
+        <tr>
+            <td>Price:</td>
+            <td>{{product.price | currency: 'USD'}}</td>
+        </tr>
     </table>
     
     <app-comment-add></app-comment-add>
     <app-comments-list></app-comments-list>
     </body>
+</div>
+<div style="float:center;"><img [src]="'assets/images/' + product!.id + format" width="300" class="shadow-4" /></div>

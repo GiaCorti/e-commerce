@@ -11,7 +11,8 @@ import { ProductService } from '../services/product.service';
 export class ProductDetailComponent implements OnInit {
 
   product: Product | undefined;
-  id: string = "";
+  id = "";
+  format = ".jpg";
   constructor(private productService: ProductService, private route: ActivatedRoute ) { }
 
   ngOnInit(): void {
