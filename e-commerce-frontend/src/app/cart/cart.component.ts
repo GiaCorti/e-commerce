@@ -46,6 +46,7 @@ export class CartComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.messageService.add({severity:'info', summary:'Confirmed', detail:'Confirmed purchase'});
+            this.cartService.buy().subscribe(o => this.ngOnInit())
         },
         reject: (type: any) => {
             switch(type) {

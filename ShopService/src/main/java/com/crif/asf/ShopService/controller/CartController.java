@@ -63,7 +63,7 @@ public class CartController {
 	cartService.removeProductFromCart(idProduct, idUser);
     }
 
-    @GetMapping("/buy")
+    @PostMapping("/buy")
     public List<Order> buy(@RequestHeader("Authorization") String token) {
 	String idUser = authService.getIdUser(token);
 	if (idUser == null)
