@@ -1,5 +1,5 @@
-<div style="float:left;">
-<body *ngIf="product">
+<div style="float:left;" *ngIf="product">
+<body >
     <br>
     <br>  
     <table ptable class="styled-table">
@@ -24,5 +24,6 @@
     <app-comment-add></app-comment-add>
     <app-comments-list></app-comments-list>
     </body>
+
+<div style="float:center;"><img [src]="'assets/images/' + product.id+ format" width="300" class="shadow-4" /></div>
 </div>
-<div style="float:center;"><img [src]="'assets/images/' + product!.id + format" width="300" class="shadow-4" /></div>

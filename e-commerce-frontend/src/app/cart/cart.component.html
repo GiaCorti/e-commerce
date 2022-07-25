@@ -46,7 +46,7 @@
 
     <h3>Total: {{total | currency: 'USD'}}</h3>
     <p-confirmDialog [style]="{width: '50vw'}" 
-    [baseZIndex]="10000" rejectButtonStyleClass="p-button-text" key="buy"></p-confirmDialog>
+    [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
     <p-button (click)="confirm()" icon="pi pi-check" label="Buy" styleClass="mr-2"></p-button>
     <button pButton type="button" [style]="{'margin-left':'10px'}" icon="pi pi-times" label="Empty" 
     class="p-button-danger" (click)="emptyCart()"></button>
