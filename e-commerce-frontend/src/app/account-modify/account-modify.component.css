@@ -2,10 +2,11 @@ body {
     position: relative;
     width: 100%;
     display: block;
+ 
   }
   body > *  {
     margin: auto;
-    width: 60%;
+    width: 50%;
     display: block;
     overflow: auto;
     margin-left: 30%;

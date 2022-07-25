@@ -3,12 +3,14 @@ body {
     font-family: 'Trebuchet MS', sans-serif;
 
     background-image: url("https://static.vecteezy.com/system/resources/previews/001/410/750/original/cyber-monday-happy-shopping-background-free-vector.jpg");
+    background-blend-mode:soft-light;
     background-color: #cccccc;
     height: 100%;
-    background-position: center;
+    background-position: auto;
     background-size: cover;
     align-items: center;
     justify-content: center;
+   
 
 
 }
