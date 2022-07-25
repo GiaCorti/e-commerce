@@ -44,7 +44,7 @@ export class CartService {
   removeFromCart(id: string): Observable<any> {
     return this.http.delete<any>(this.url + "?id_product=" + id)
       .pipe(
-        tap(_ => {console.log('product removed from cart'),this.changedCart.next(true);}),
+        tap(_ => {console.log('product removed from cart');this.changedCart.next(true);}),
         catchError(this.handleError<Cart[]>('removeFromCart'))
       );
   }
@@ -56,6 +56,7 @@ export class CartService {
           {
             console.log('buy executed');
             this.orders = orders;
+            this.changedCart.next(true);
           }),
         catchError(this.handleError<any>('buy'))
       );
