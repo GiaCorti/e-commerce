@@ -1,4 +1,4 @@
-<div class="center">
+<body>
     <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
         <h3>Add a new product</h3>
         <div class="grid p-fluid" [style]="{'width':'25%'}">
@@ -30,4 +30,4 @@
         [disabled]="!addProductForm.valid">
         </p-button>
     </form>
-</div>
+</body>
