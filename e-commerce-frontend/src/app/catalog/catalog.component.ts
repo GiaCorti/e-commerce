@@ -68,6 +68,7 @@ export class CatalogComponent implements OnInit {
     this.getNumOfProductsFiltered(min, max);
     this.productService.getFilteredCatalog(f, this.page, this.rows).subscribe(catalog => {
       this.catalog = catalog;
+      this.loading = false;
     });
   }
 
@@ -78,7 +79,7 @@ export class CatalogComponent implements OnInit {
   }
 
   loadProducts(event: any) {
-    console.log(JSON.stringify(event));
+    this.loading = true;
     this.rows = event.rows;
     this.page = event.first/event.rows;
     this.getFilteredCatalog(this.rangeValues[0], this.rangeValues[1]);
