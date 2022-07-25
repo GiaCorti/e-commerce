@@ -117,7 +117,8 @@ export class NavComponent implements OnInit {
         {
           label: "Cart",
           icon: 'pi pi-shopping-cart',
-          routerLink:['cart']
+          routerLink:['cart'],
+          badge: this.cartNumbItems
         },
           {
             icon: 'pi pi-user',

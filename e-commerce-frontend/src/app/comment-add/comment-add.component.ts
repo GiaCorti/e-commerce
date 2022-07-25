@@ -41,7 +41,7 @@ export class CommentAddComponent implements OnInit {
 
   addReview(){
     this.comment.text = this.text;
-    this.prodService.addComment(this.idprod,this.comment).subscribe(()=>window.location.reload())
+    this.prodService.addComment(this.idprod,this.comment).subscribe(()=>this.ngOnInit())
 
   }
 
