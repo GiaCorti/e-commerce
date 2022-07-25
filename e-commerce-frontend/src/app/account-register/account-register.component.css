@@ -7,7 +7,7 @@ body {
     margin: auto;
     width: 20%;
     display: block;
-    overflow: auto;
+    
   }
 
   body > script {

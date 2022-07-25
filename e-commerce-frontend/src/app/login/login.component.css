@@ -14,3 +14,6 @@ body {
   body > script {
     display: none
   }
+p-button{
+  margin: 2px;
+}
