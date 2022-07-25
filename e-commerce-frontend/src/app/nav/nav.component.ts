@@ -51,6 +51,7 @@ export class NavComponent implements OnInit {
   }
 
   updateCartNumbItems() {
+    if(this.isLogged){
     let carts: Cart[];
     let qty = 0;
     this.cartService.getCart().subscribe(res => {carts = res;
@@ -58,7 +59,7 @@ export class NavComponent implements OnInit {
       qty = qty + c.qty);
       
     this.cartNumbItems = String(qty);
-    this.setItem();})
+    this.setItem();})}
   }
 
   setItem(){
