@@ -1,6 +1,11 @@
+
+
 <div class="center">
     <p-toast position="bottom-center" key="bc"></p-toast>
-    <p-table [style]="{'width':'85%'}" [value]="catalog" responsiveLayout="scroll">
+    <p-table [style]="{'width':'85%'}" [value]="catalog" responsiveLayout="scroll"
+    [lazy]="true" (onLazyLoad)="loadProducts($event)"
+    [paginator]="true" [rows]=rows [totalRecords]="totProducts" [rowsPerPageOptions]="[5,10,20,30]"
+    >
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 Products
@@ -69,6 +74,5 @@
             </div>
         </ng-template>
     </p-table>
-    <p-paginator [rows]=rows [totalRecords]=totProducts [rowsPerPageOptions]="[5,10,20,30]"
-        (onPageChange)="paginate($event)" ></p-paginator>
 </div>
+
