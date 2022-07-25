@@ -33,9 +33,9 @@ export class AccountsListComponent implements OnInit {
 
   delete(userid: string): void {
     if(userid == this.idExec){
-      this.accountService.delete(userid).subscribe(() => this.logOut());    }
+      this.accountService.delete(userid).subscribe(() => this.logOut());}
     else{
-    this.accountService.delete(userid).subscribe(() => window.location.reload())}
+    this.accountService.delete(userid).subscribe(() => this.ngOnInit())}
   }
 
   confirmDelete(userid: string): void {
@@ -48,7 +48,7 @@ export class AccountsListComponent implements OnInit {
             
         },
         reject: () => {
-                
+          
             }
         }
     );
