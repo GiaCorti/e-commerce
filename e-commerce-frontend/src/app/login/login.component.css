@@ -5,6 +5,7 @@ body {
   }
   body > *  {
     margin: auto;
+    margin-top: 5%;
     width: 20%;
     display: block;
     overflow: auto;
