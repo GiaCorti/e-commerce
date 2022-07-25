@@ -1,6 +1,7 @@
 <body class="p-grid p-nogutter p-d-flex p-justify-center p-ai-center">
     <h2>Login</h2>
     
+    <h5> Don't have an account? <a [routerLink]="['../account/register']"> Register Here</a></h5>
     <form class="form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
     
         <div class="p-float-label">
@@ -18,8 +19,6 @@
           <br>
           <br>
           <p-button type="submit" label="Login" icon="pi pi-sign-in" class="p-button-success"></p-button>
-          
-          <p-button type="button"  label="Register" icon="pi pi-plus"  [routerLink]="['../account/register']" ></p-button>
-        
+                  
       </form>
     </body>
