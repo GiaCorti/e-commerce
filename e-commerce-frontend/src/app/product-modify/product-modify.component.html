@@ -1,3 +1,4 @@
+<body>
 <div class = "center" *ngIf="product">
 <h3>Product with id {{product.id}}</h3>
     <div class="grid p-fluid" [style]="{'width':'25%'}">
@@ -31,3 +32,4 @@
         [disabled]="product.price <= 0.01 || product.name.length < 1">
     </p-button>
 </div>
+</body>

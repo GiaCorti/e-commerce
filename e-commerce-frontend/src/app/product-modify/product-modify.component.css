@@ -1,0 +1,16 @@
+body {
+    position: relative;
+    width: 100%;
+    display: block;
+  }
+  body > *  {
+    margin: auto;
+    margin-left: 40%;
+    width: 80%;
+    display: block;
+    overflow: auto;
+  }
+
+  body > script {
+    display: none
+  }

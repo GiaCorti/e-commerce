@@ -44,7 +44,7 @@ export class NavComponent implements OnInit {
         
        })
   })
-    //this.isLogged = this.authService.hasValidAccessToken();
+    //this.isLogged = this.authService.hasValidAccessToken()
     
   }
 
