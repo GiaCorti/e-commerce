@@ -1,3 +1,9 @@
 .center{
     margin-left: 180px;
 }
+
+.total {
+    background-color: white;
+    inline-size: max-content;
+    padding: 8px
+}

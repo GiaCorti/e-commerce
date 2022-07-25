@@ -1,63 +1,68 @@
 <body>
+  <div class="first">
     <h2>Edit Account</h2>
-
+  </div>
     <br>
     <form class="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
       <br>
+        <div class="first">
         <div class="p-float-label">
             <input pInputText  id="email" type="text" formControlName="email" required minlength="3" maxlength="50">
             <label for="email" icon="pi pi-at">Email</label>
           
           </div>
+        </div>
           <br>
+          <div class="inline">
           <div class="p-float-label">
             
             <input pInputText id="firstname" type="text" formControlName="firstName" required minlength="3" maxlength="50">
             <label for="firstname" icon="pi pi-at">FirstName</label>
           </div>
-          <br>
-          <div class="p-float-label">
-            
+        </div>
+          
+          <div class="inline">
+          <div class="p-float-label">  
             <input pInputText id="lastname" type="text" formControlName="lastName" required minlength="3" maxlength="50">
             <label for="lastname" icon="pi pi-at">LastName</label>
           </div>
+        </div>
           <br>
+          <div class="inline">
           <div class="p-float-label">
             
             <input pPassword type="password" weakLabel="Weak :(" mediumLabel="Medium :|" strongLabel="Strong :)" toggleMask:true id="password" type="password" formControlName="password" maxlength="50">
             <label for="password">New Password</label>
           </div>
-          <br>
-
+        </div>
+          
+          <div class="inline">
           <div class="p-float-label">
             
             <input pInputText id="birthday" type="date" formControlName="birthday">
             <label for="birthday" icon="pi pi-at">Birthday</label>
           </div>
-
+        </div>
           <br>
-          <form class="form" [formGroup]="balForm" (ngSubmit)="onSubmit()">
-
+          
+          <div class="inline">
+          <form [formGroup]="balForm" (ngSubmit)="onSubmit()">
             <div class="p-float-label">
               <input pInputText  id="balance" type="number" formControlName="balance">
               <label for="balance" >ADD Balance ( current= {{account.balance |currency}})</label>
-              
-            
             </div>
-            <br>
           </form>
+        </div>
 
-          <br>
-          <form *ngIf="this.isAdmin" class="form" [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+          <div class="inline">
+          <form *ngIf="this.isAdmin" [formGroup]="roleForm" (ngSubmit)="onSubmit()">
 
             <div class="p-float-label">
               <p-dropdown id="role" [options]="roles" formControlName="role"></p-dropdown>
               <label for="role" >Role</label>
-              
-            
             </div>
-            <br>
           </form>
+        </div>
 
           
           

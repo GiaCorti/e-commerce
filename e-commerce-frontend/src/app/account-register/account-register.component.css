@@ -1,15 +1,28 @@
 body {
     position: relative;
-    width: 100%;
+    width: 80%;
     display: block;
   }
   body > *  {
     margin: auto;
-    width: 20%;
+    margin-left: 40%;
+    margin-top: 2%;
+    width: 80%;
     display: block;
     
   }
-
+  form div {
+    margin: 5px;
+    display: inline-block;
+    margin: 5px;
+}
   body > script {
     display: none
+  }
+  h2{
+    margin-left: 80%;
+  }
+
+  p-button{
+    margin-left: 23%;
   }
