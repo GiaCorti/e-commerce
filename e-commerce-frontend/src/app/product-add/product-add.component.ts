@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 import { Location } from '@angular/common';
@@ -14,9 +14,9 @@ export class ProductAddComponent implements OnInit {
   constructor(private productService: ProductService, private location: Location) { }
 
   addProductForm = new FormGroup({
-    name: new FormControl(''),
-    price: new FormControl(''),
-    description: new FormControl('')
+    name: new FormControl('', [Validators.min(1), Validators.required]),
+    price: new FormControl(0.01, [Validators.min(0.01), Validators.required]),
+    description: new FormControl('', [Validators.min(1), Validators.required])
   });
 
 
@@ -26,7 +26,7 @@ export class ProductAddComponent implements OnInit {
 
   onSubmit(): void {
     let nameInput = this.addProductForm.get('name')?.value!;
-    let priceInput = parseInt(this.addProductForm.get('price')?.value!);
+    let priceInput = this.addProductForm.get('price')?.value!;
     let descriptionInput = this.addProductForm.get('description')?.value!;
     let product: Product = {
       name: nameInput,

@@ -20,12 +20,14 @@
             <div class="col-12 md:col-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Description</span>
-                    <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" formControlName="description"></textarea>
+                    <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" 
+                    formControlName="description" placeholder="Description"></textarea>
                 </div>
             </div>
         </div>
 
-        <p-button type="submit" label="Add" icon="pi pi-check" iconPos="right" [style]="{'margin-top':'15px'}">
+        <p-button type="submit" label="Add" icon="pi pi-check" iconPos="right" [style]="{'margin-top':'15px'}"
+        [disabled]="!addProductForm.valid">
         </p-button>
     </form>
 </div>
