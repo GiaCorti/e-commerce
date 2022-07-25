@@ -24,7 +24,7 @@ export class CommentsListComponent implements OnInit {
   getComments() {
     this.id_prod = String(this.route.snapshot.paramMap.get('id_product'));
     
-   this.prodService.getComments(this.id_prod).subscribe(res => {this.comments = res
+   this.prodService.getComments(this.id_prod).subscribe(res => {this.comments = res.reverse()
   console.log(res)})
 
   }

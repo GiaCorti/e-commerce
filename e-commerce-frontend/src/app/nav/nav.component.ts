@@ -4,7 +4,8 @@ import { AuthService } from '../services/auth.service';
 import { Location } from '@angular/common';
 import { AccountService } from '../services/account.service';
 import { ConfirmationService} from 'primeng/api';
-import { ThisReceiver } from '@angular/compiler';
+import { CartService } from '../services/cart.service';
+import { Cart } from '../models/cart';
 
 @Component({
   selector: 'app-nav',
@@ -15,29 +16,49 @@ export class NavComponent implements OnInit {
   items: MenuItem[] = [];
   isAdmin = false;
   isLogged:boolean | undefined;
-  userid: string = "oo";
+  userid: string = "";
+  cartNumbItems: string = '0'
+
+
   constructor(private authService: AuthService,
     private location: Location,
     private accountService: AccountService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
+    
     if(this.authService.hasValidAccessToken()){
-        this.setItem();
+        this.updateCartNumbItems();
+        
+        
     }
     else{
         this.setItemNotLogged();
     }
-    
 
+    this.cartService.changedCart.subscribe(()=>this.updateCartNumbItems())
+    
     this.authService.isLogged.subscribe(res => {this.isLogged = res
       this.authService.getUser().subscribe(r => {
         this.userid= r;
-        this.setItem();
+        this.updateCartNumbItems();
+        
        })
   })
     //this.isLogged = this.authService.hasValidAccessToken();
     
+  }
+
+  updateCartNumbItems() {
+    let carts: Cart[];
+    let qty = 0;
+    this.cartService.getCart().subscribe(res => {carts = res;
+    carts.forEach(c =>
+      qty = qty + c.qty);
+      
+    this.cartNumbItems = String(qty);
+    this.setItem();})
   }
 
   setItem(){
@@ -64,7 +85,8 @@ export class NavComponent implements OnInit {
       {
         label: "Cart",
         icon: 'pi pi-shopping-cart',
-        routerLink:['cart']
+        routerLink:['cart'],
+        badge: this.cartNumbItems
       },
         {
           icon: 'pi pi-user',

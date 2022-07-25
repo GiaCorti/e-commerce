@@ -7,6 +7,9 @@ import { Observable, of, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  
+
+  
   hasValidAccessToken() {
    const token = sessionStorage.getItem('token');
    return token !== null;

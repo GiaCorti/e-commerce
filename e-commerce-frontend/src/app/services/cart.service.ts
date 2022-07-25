@@ -1,7 +1,7 @@
 import { CartOrder } from '../models/cartOrder';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap, catchError, Observable, of } from 'rxjs';
+import { tap, catchError, Observable, of, Subject } from 'rxjs';
 import { Cart } from '../models/cart';
 import { Order } from '../models/order';
 
@@ -22,11 +22,13 @@ export class CartService {
   constructor(private http: HttpClient) {
   }
 
+  public  changedCart= new Subject<boolean>();
+
 
   addItemToCart(p: CartOrder): Observable<any> {
     return this.http.post<CartOrder>(this.url, p, this.httpOptions)
       .pipe(
-        tap(_ => console.log('product has been added to your cart')),
+        tap(_ => {console.log('product has been added to your cart');this.changedCart.next(true);}),
         catchError(this.handleError<CartOrder>('addProduct'))
       );
   }
@@ -42,7 +44,7 @@ export class CartService {
   removeFromCart(id: string): Observable<any> {
     return this.http.delete<any>(this.url + "?id_product=" + id)
       .pipe(
-        tap(_ => console.log('product removed from cart')),
+        tap(_ => {console.log('product removed from cart'),this.changedCart.next(true);}),
         catchError(this.handleError<Cart[]>('removeFromCart'))
       );
   }

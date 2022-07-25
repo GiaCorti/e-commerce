@@ -98,7 +98,10 @@ export class ProductService {
   }
 
   getComments(idProd: string): Observable<Comment[]> {
-    return this.http.get<Comment[]>(this.url+"/"+idProd+"/comments")
+    return this.http.get<Comment[]>(this.url+"/"+idProd+"/comments").pipe(
+      tap(_ => console.log('comments has been added')),
+      catchError(this.handleError<any>('addComment'))
+    );
     
   }
 
@@ -111,7 +114,9 @@ export class ProductService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      //if(error.status == 0){error.status = 502}
       console.error(error); 
+      
       window.alert(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
