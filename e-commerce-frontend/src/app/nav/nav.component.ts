@@ -30,8 +30,6 @@ export class NavComponent implements OnInit {
     
     if(this.authService.hasValidAccessToken()){
         this.updateCartNumbItems();
-        
-        
     }
     else{
         this.setItemNotLogged();
@@ -51,7 +49,7 @@ export class NavComponent implements OnInit {
   }
 
   updateCartNumbItems() {
-    if(this.isLogged){
+    if(this.authService.hasValidAccessToken()){
     let carts: Cart[];
     let qty = 0;
     this.cartService.getCart().subscribe(res => {carts = res;
