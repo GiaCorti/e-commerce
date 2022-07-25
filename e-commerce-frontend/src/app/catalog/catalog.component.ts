@@ -26,6 +26,7 @@ export class CatalogComponent implements OnInit {
   totProducts: number = 0;
   isAdmin = false;
   initValue = 1;
+  loading = false;
 
   constructor(
     private productService: ProductService, 
@@ -73,6 +74,13 @@ export class CatalogComponent implements OnInit {
   paginate(event: any) {
     this.rows = event.rows;
     this.page = event.page;
+    this.getFilteredCatalog(this.rangeValues[0], this.rangeValues[1]);
+  }
+
+  loadProducts(event: any) {
+    console.log(JSON.stringify(event));
+    this.rows = event.rows;
+    this.page = event.first/event.rows;
     this.getFilteredCatalog(this.rangeValues[0], this.rangeValues[1]);
   }
 
