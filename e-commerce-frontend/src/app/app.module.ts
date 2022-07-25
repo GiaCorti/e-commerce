@@ -40,6 +40,7 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {FieldsetModule} from 'primeng/fieldset';
+import {BadgeModule} from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import {FieldsetModule} from 'primeng/fieldset';
     InputNumberModule,
     ConfirmDialogModule,
     ToastModule,
-    FieldsetModule
+    FieldsetModule,
+    BadgeModule
   ],
   providers: [
     {

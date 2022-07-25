@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crif.asf.ShopService.DTO.OrderDTO;
 import com.crif.asf.ShopService.exception.TokenNotValidException;
 import com.crif.asf.ShopService.model.Cart;
 import com.crif.asf.ShopService.model.CartOrder;
-import com.crif.asf.ShopService.model.Order;
 import com.crif.asf.ShopService.service.AuthService;
 import com.crif.asf.ShopService.service.CartService;
 import com.crif.asf.ShopService.service.OrderService;
@@ -63,8 +63,18 @@ public class CartController {
 	cartService.removeProductFromCart(idProduct, idUser);
     }
 
+    @DeleteMapping("/empty")
+    public void removeAllProductFromCart(
+
+	    @RequestHeader("Authorization") String token) {
+	String idUser = authService.getIdUser(token);
+	if (idUser == null)
+	    throw new TokenNotValidException();
+	cartService.removeAllProductFromCart(idUser);
+    }
+
     @PostMapping("/buy")
-    public List<Order> buy(@RequestHeader("Authorization") String token) {
+    public List<OrderDTO> buy(@RequestHeader("Authorization") String token) {
 	String idUser = authService.getIdUser(token);
 	if (idUser == null)
 	    throw new TokenNotValidException();

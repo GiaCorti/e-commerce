@@ -20,4 +20,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 	    + "from Cart c where c.product.id=?1 and c.idUser=?2 and c.completed=false")
     boolean existsByIdProductAndIdUser(Integer idProduct, String idUser);
 
+    @Modifying
+    @Query("delete from Cart c where c.idUser=?1 and c.completed=false")
+    void deleteByIdUser(String idUser);
+
 }

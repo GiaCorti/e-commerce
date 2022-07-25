@@ -10,6 +10,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.crif.asf.ShopService.DTO.OrderDTO;
+import com.crif.asf.ShopService.assembler.OrderAssembler;
 import com.crif.asf.ShopService.exception.NotEnoughBalanceException;
 import com.crif.asf.ShopService.model.Cart;
 import com.crif.asf.ShopService.model.Order;
@@ -26,7 +28,7 @@ public class OrderService {
     private AccountService accountService;
 
     @Transactional
-    public List<Order> buy(String idUser) {
+    public List<OrderDTO> buy(String idUser) {
 
 	// get current cart of idUser
 	List<Cart> cartsToProcess = cartService.getCart(idUser);
@@ -55,6 +57,11 @@ public class OrderService {
 			c.getProduct().getPrice() * c.getQty()))
 		.collect(Collectors.toList());
 
-	return orderRepository.saveAll(orderList);
+	orderRepository.saveAll(orderList);
+
+	return orderList
+		.stream()
+		.map(o -> OrderAssembler.assemble(o))
+		.collect(Collectors.toList());
     }
 }

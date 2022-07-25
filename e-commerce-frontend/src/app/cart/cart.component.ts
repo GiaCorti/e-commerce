@@ -41,8 +41,11 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(id).subscribe(_ => this.ngOnInit());
   }
 
+  emptyCart(): void {
+    this.cartService.emptyCart().subscribe(_ => this.ngOnInit());
+  }
+
   confirm(): void {
-    console.log("called")
     if (this.cartList.length == 0)
       this.showWarning();
     else {
@@ -51,16 +54,15 @@ export class CartComponent implements OnInit {
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Confirmed purchase' });
           this.cartService.buy().subscribe(o => this.router.navigate(["/receipt"]))
         },
         reject: (type: any) => {
           switch (type) {
             case ConfirmEventType.REJECT:
-              this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected the purchase' });
+              this.messageService.add({ key:'rej' ,severity: 'error', summary: 'Rejected', detail: 'You have rejected the purchase' });
               break;
             case ConfirmEventType.CANCEL:
-              this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled the purchase' });
+              this.messageService.add({ key:'canc', severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled the purchase' });
               break;
           }
         }

@@ -1,3 +1,4 @@
+import { OrderDTO } from './../models/orderDTO';
 import { CartService } from './../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../models/order';
@@ -9,15 +10,15 @@ import { Order } from '../models/order';
 })
 export class ReceiptComponent implements OnInit {
 
-  orders: Order[] = []
+  ordersDTO: OrderDTO[] = []
   total = 0;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.orders = this.cartService.getOrders();
-    this.total = this.orders.reduce((accumulator, order) => {
-      return accumulator + order.total;
+    this.ordersDTO = this.cartService.getOrders();
+    this.total = this.ordersDTO.reduce((accumulator, orderDTO) => {
+      return accumulator + orderDTO.price*orderDTO.qty;
     }, 0);
   }
 

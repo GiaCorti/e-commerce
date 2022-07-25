@@ -1,4 +1,4 @@
-<body *ngIf="orders">
+<body *ngIf="ordersDTO">
     <br>
     <br>  
     <table ptable class="styled-table">
@@ -7,13 +7,13 @@
             <td><b>Quantity</b></td>
             <td><b>Price</b></td>
         </tr>
-        <tr *ngFor="let o of orders">
-            <td>{{o.cart.product.name}}</td>
-            <td>{{o.cart.qty}}</td>
-            <td>{{o.cart.product.price | currency: 'USD'}}</td>
+        <tr *ngFor="let o of ordersDTO">
+            <td>{{o.productName}}</td>
+            <td>{{o.qty}}</td>
+            <td>{{o.price | currency: 'USD'}}</td>
         </tr>
     </table>
    
     <h4 id ="total">Total: {{total | currency: 'USD' }}</h4>
-    <h4>Purchase date: {{orders[0].orderDate | date: 'medium'}}</h4>
+    <h4>Purchase date: {{ordersDTO[0].orderDate | date: 'medium'}}</h4>
     </body>

@@ -1,3 +1,4 @@
+import { OrderDTO} from './../models/orderDTO';
 import { CartOrder } from '../models/cartOrder';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,7 +14,7 @@ export class CartService {
 
   private url = 'http://localhost:14001/cart';
 
-  orders: Order[] = [];
+  ordersDTO: OrderDTO[] = [];
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -45,25 +46,33 @@ export class CartService {
     return this.http.delete<any>(this.url + "?id_product=" + id)
       .pipe(
         tap(_ => {console.log('product removed from cart');this.changedCart.next(true);}),
-        catchError(this.handleError<Cart[]>('removeFromCart'))
+        catchError(this.handleError<any>('removeFromCart'))
       );
   }
 
-  buy(): Observable<Order[]> {
+  emptyCart(): Observable<any> {
+    return this.http.delete<any>(this.url + "/empty")
+    .pipe(
+      tap(_ => {console.log('products removed from cart');this.changedCart.next(true);}),
+      catchError(this.handleError<any>('emptyCart'))
+    );
+  }
+
+  buy(): Observable<OrderDTO[]> {
     return this.http.post<any>(this.url+"/buy", null)
       .pipe(
         tap(orders => 
           {
             console.log('buy executed');
-            this.orders = orders;
+            this.ordersDTO = orders;
             this.changedCart.next(true);
           }),
         catchError(this.handleError<any>('buy'))
       );
   }
 
-  getOrders(): Order[]{
-    return this.orders;
+  getOrders(): OrderDTO[]{
+    return this.ordersDTO;
   }
 
 
@@ -74,6 +83,4 @@ export class CartService {
       return of(result as T);
     };
   }
-
-
 }

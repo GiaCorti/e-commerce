@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.crif.asf.ShopService.DTO.OrderDTO;
+import com.crif.asf.ShopService.assembler.OrderAssembler;
 import com.crif.asf.ShopService.exception.NotEnoughBalanceException;
 import com.crif.asf.ShopService.model.Cart;
 import com.crif.asf.ShopService.model.Order;
@@ -58,11 +61,16 @@ public class OrderServiceTest {
 		new Order("1", c1, LocalDateTime.now(), 41.0),
 		new Order("1", c2, LocalDateTime.now(), 10.0));
 
+	List<OrderDTO> ordersDTO = orders
+		.stream()
+		.map(o -> OrderAssembler.assemble(o))
+		.collect(Collectors.toList());
+
 	Mockito.when(orderRepository.saveAll(any())).thenReturn(orders);
 
-	List<Order> res = orderService.buy(user);
+	List<OrderDTO> res = orderService.buy(user);
 
-	assertEquals(orders, res);
+	assertEquals(ordersDTO, res);
 
     }
 

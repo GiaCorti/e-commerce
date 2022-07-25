@@ -1,6 +1,7 @@
 package com.crif.asf.ShopService.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -30,7 +31,20 @@ public class CartService {
 	if (!catalogService.existsById(cartOrder.getIdProduct()))
 	    throw new ProductNotFoundException();
 	Product p = catalogService.getProductById(cartOrder.getIdProduct());
-	cartRepository.save(new Cart(idUser, cartOrder.getQty(), p));
+	Optional<Cart> cartItem = this.getCart(idUser)
+		.stream()
+		.filter(c -> c.getProduct().getId() == cartOrder.getIdProduct() && !c.getCompleted())
+		.findFirst();
+
+	if (cartItem.isPresent()) {
+	    Cart cartItemUpdated = cartItem.get();
+	    cartItemUpdated.setQty(cartItemUpdated.getQty() + cartOrder.getQty());
+	    cartRepository.save(cartItemUpdated);
+	}
+
+	else {
+	    cartRepository.save(new Cart(idUser, cartOrder.getQty(), p));
+	}
     }
 
     @Transactional
@@ -45,6 +59,12 @@ public class CartService {
 	List<Cart> currentCarts = this.getCart(idUser);
 	currentCarts.forEach(c -> c.setCompleted(true));
 	cartRepository.saveAll(currentCarts);
+    }
+
+    @Transactional
+    public void removeAllProductFromCart(String idUser) {
+	cartRepository.deleteByIdUser(idUser);
+
     }
 
 }
