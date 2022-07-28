@@ -39,6 +39,7 @@ export class AccountsListComponent implements OnInit {
   }
 
   confirmDelete(userid: string): void {
+    console.log("click delete")
     this.confirmationService.confirm({
         message: 'Are you sure you want to DELETE this account?',
         header: 'Confirmation',
